@@ -148,7 +148,8 @@ module.exports = function (opts) {
 
 		"post#business/update" : function (req, res) {
         	// Get Request Parameters
-            var name            = req.body.name,
+            var id              = req.body.id,
+                name            = req.body.name,
                 is_available    = req.body.is_available,
                 phone           = req.body.phone,
                 price_range     = req.body.price_range,
