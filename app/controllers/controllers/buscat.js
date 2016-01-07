@@ -12,7 +12,7 @@ var format_category = function (cat){
 }
 
 var format_categories = function (cat){
-    if(cat.constructor === Array){
+    if(cat && cat.constructor === Array){
         // Format Array
         if(cat.length){
             var return_value = [];
@@ -85,7 +85,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying Business Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
                     console.log('we get here');
 					return res.json({ success : true, cat : format_categories(cat) });

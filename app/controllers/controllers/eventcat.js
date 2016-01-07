@@ -30,14 +30,14 @@ var format_categories = function (cat){
 }
 
 module.exports = function (opts) {
-    var catModel = opts.models.DealCat;
+    var catModel = opts.models.EventCat;
     var failure_callback = require('./common.js')().failure_callback;
     var success_callback = require('./common.js')().success_callback;
   
     return {
         "format_category" : format_category,
         "format_categories" : format_categories,
-        "post#deal_category/create" : function (req, res) {
+        "post#event_category/create" : function (req, res) {
         	// Get Request Parameters
             var name			= req.body.name;
 
@@ -71,7 +71,7 @@ module.exports = function (opts) {
             });
         },
 
-		"post#deal_category/get" : function( req, res ) {
+		"post#event_category/get" : function( req, res ) {
 			var _id = req.body.id;
 			var query;
 
@@ -93,7 +93,7 @@ module.exports = function (opts) {
 			});
 		},
 
-		"post#deal_category/update" : function (req, res) {
+		"post#event_category/update" : function (req, res) {
         	// Get Request Parameters
             var name            = req.body.name;
 
@@ -110,7 +110,7 @@ module.exports = function (opts) {
                     console.log(err);
                     return failure_callback(res);
                 } else if (!b) {
-                	return failure_callback(res, "Business Not Found!");
+                	return failure_callback(res, "Category Not Found!");
                 }
 
                 c.name          = (name)?name:c.name;
@@ -127,7 +127,7 @@ module.exports = function (opts) {
             });
         },
 
-		"post#deal_category/delete" : function( req, res) {
+		"post#event_category/delete" : function( req, res) {
 			var id = req.body.id;
 			catModel.remove({ _id : id}, function(err){
 				if(err){

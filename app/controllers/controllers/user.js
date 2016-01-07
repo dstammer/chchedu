@@ -23,7 +23,7 @@ var format_user = function (user, includePassword){
             u.events = JSON.parse(user.events);
         }
         catch (e){
-            u.events = {};
+            u.events = {events:[]};
         }
         try{
             u.settings = JSON.parse(user.settings);
@@ -39,7 +39,7 @@ var format_user = function (user, includePassword){
 }
 
 var format_users = function (users){
-    if(users.constructor === Array){
+    if(users && users.constructor === Array){
         // Format Array
         if(users.length){
             var return_value = [];
@@ -107,7 +107,7 @@ module.exports = function (opts) {
                 u.institution	= (institution)?institution:"";
                 u.device_token	= (device_token)?device_token:"";
                 u.deals			= (deals)?JSON.stringify(deals):"{}";
-                u.events		= (events)?JSON.stringify(events):"{}";
+                u.events		= (events)?events:"{\"events\":[]}";
                 u.settings		= (settings)?JSON.stringify(settings):"{}";
                 u.auth_token    = "";
 				
@@ -137,7 +137,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying User Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
 					return res.json({ success : true, users : format_users(users) });
 				}
@@ -147,13 +147,15 @@ module.exports = function (opts) {
         "post#user/login" : function( req, res ) {
             var email       = req.body.email,
                 password    = req.body.password;
+                console.log(email);
+                console.log(password);
             var query = userModel.findOne({email: email, password: password});
 
             query.exec(function(err, users){
-                if(err && !users){
+                if(err || !users){
                     console.log("-- Error : Querying User Failed --");
                     console.log(err);
-                    return failure_callback();
+                    return failure_callback(res);
                 } else {
                     return res.json({ success : true, user_data : format_users(users) });
                 }
@@ -168,7 +170,7 @@ module.exports = function (opts) {
                 if(err){
                     console.log("-- Error : Querying User Failed --");
                     console.log(err);
-                    return failure_callback();
+                    return failure_callback(res);
                 } else {
                     return res.json({ success : true });
                 }
@@ -217,7 +219,7 @@ module.exports = function (opts) {
                 u.institution	= (institution)?institution:u.institution;
                 u.device_token	= (device_token)?device_token:u.device_token;
                 u.deals			= (deals)?JSON.stringify(deals):u.deals;
-                u.events		= (events)?JSON.stringify(events):u.events;
+                u.events		= (events)?events:u.events;
                 u.settings		= (settings)?JSON.stringify(settings):u.settings;
 				
 				u.save(function (err, new_user) {

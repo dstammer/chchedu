@@ -20,7 +20,7 @@ module.exports = function (opts) {
     }
 
     var format_guidees = function (guide){
-        if(guide.constructor === Array){
+        if(guide && guide.constructor === Array){
             // Format Array
             if(guide.length){
                 var return_value = [];
@@ -96,7 +96,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying Guide Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
                     console.log('we get here');
 					return res.json({ success : true, guide : format_guidees(guide) });

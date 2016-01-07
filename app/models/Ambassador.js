@@ -14,6 +14,9 @@ module.exports = function (opts) {
 		course : {
             type: String
 		},
+		description : {
+            type: String
+		},
 		photo : {
             type: String
 		},

@@ -22,7 +22,7 @@ module.exports = function (opts) {
     }
 
     var format_ambassadores = function (ambassador){
-        if(ambassador.constructor === Array){
+        if(ambassador && ambassador.constructor === Array){
             // Format Array
             if(ambassador.length){
                 var return_value = [];
@@ -102,7 +102,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying Ambassador Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
                     console.log('we get here');
 					return res.json({ success : true, ambassador : format_ambassadores(ambassador) });

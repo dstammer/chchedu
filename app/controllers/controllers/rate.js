@@ -1,20 +1,20 @@
  var format_rate = function (rate){
     if(rate){
-        var b = {};
+        var r = {};
 
         r._id         = rate._id;
         r.business    = rate.business;
         r.user        = rate.user;
         r.rate        = rate.rate;
 
-        return b;
+        return r;
     }
 
     return rate;
 }
 
 var format_rates = function (rates){
-    if(rates.constructor === Array){
+    if(rates && rates.constructor === Array){
         // Format Array
         if(rates.length){
             var return_value = [];
@@ -88,7 +88,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying Rate Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
 					return res.json({ success : true, rates : format_rates(rates) });
 				}
@@ -102,24 +102,24 @@ module.exports = function (opts) {
                 rate        = req.body.rate;
 
             // Check If Id is correctly posted
-            if(!id){
+            if(!business || !user){
             	return failure_callback(res);
             }
 
             // Check If Rate Already Exists
-			var query = rateModel.findOne({_id : id});
+			var query = rateModel.findOne({user: user, business: business});
             query.exec(function (err, r) {
                 if (err) {
                     console.log("-- Error : Finding Rate --");
                     console.log(err);
                     return failure_callback(res);
                 } else if (!r) {
-                	return failure_callback(res, "Rate Not Found!");
+                	r = new rateModel();
                 }
 
-                r.business  = (business)?business:r.business;
-                r.user      = (user)?user:r.user;
-                r.rate      = (rate)?rate:r.rate;
+                if(business) r.business = business;
+                if(user) r.user = user;
+                if(rate) r.rate = rate;
 				
 				r.save(function (err, new_rate) {
 					if (err) {

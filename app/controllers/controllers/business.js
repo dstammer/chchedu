@@ -45,7 +45,7 @@ module.exports = function (opts) {
     }
 
     var format_businesses = function (business){
-        if(business.constructor === Array){
+        if(business && business.constructor === Array){
             // Format Array
             if(business.length){
                 var return_value = [];
@@ -138,7 +138,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying Business Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
                     console.log('we get here');
 					return res.json({ success : true, business : format_businesses(business) });

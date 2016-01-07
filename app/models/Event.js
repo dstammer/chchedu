@@ -5,17 +5,30 @@ module.exports = function (opts) {
 		name : {
             type: String
 		},
-		end_date : {
-            type: Number
+		photo : {
+            type: String
+		},
+		description : {
+            type: String
+		},
+		start_date : {
+            type: String
 		},
 		price : {
             type: Number
+		},
+		place : {
+			type: String
 		},
 		address : {
             type: String
 		},
 		location : {
             type: String
+		},
+		category : {
+			type: mongoose.Schema.ObjectId,
+            ref: "EventCat"
 		}
     });
     

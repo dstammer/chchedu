@@ -22,7 +22,7 @@ module.exports = function (opts) {
     }
 
     var format_questiones = function (question){
-        if(question.constructor === Array){
+        if(question && question.constructor === Array){
             // Format Array
             if(question.length){
                 var return_value = [];
@@ -106,7 +106,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying Question Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
                     console.log('we get here');
 					return res.json({ success : true, question : format_questiones(question) });

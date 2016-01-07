@@ -24,7 +24,7 @@ module.exports = function (opts) {
     }
 
     var format_deals = function (deals){
-        if(deals.constructor === Array){
+        if(deals && deals.constructor === Array){
             // Format Array
             if(deals.length){
                 var return_value = [];
@@ -104,7 +104,7 @@ module.exports = function (opts) {
 				if(err){
 					console.log("-- Error : Querying Deal Failed --");
 					console.log(err);
-					return failure_callback();
+					return failure_callback(res);
 				} else {
 					return res.json({ success : true, deals : format_deals(deals) });
 				}
