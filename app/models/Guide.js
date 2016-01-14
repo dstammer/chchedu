@@ -13,6 +13,10 @@ module.exports = function (opts) {
 		},
 		photo : {
             type: String
+		},
+		category : {
+			type: mongoose.Schema.ObjectId,
+            ref: "GuideCat"
 		}
     });
     

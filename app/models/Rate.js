@@ -12,7 +12,10 @@ module.exports = function (opts) {
 		},
 		rate : {
             type: Number
-		}
+		},
+        comment : {
+            type: String
+        }
     });
     
     return Schema;

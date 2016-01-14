@@ -1,40 +1,42 @@
- var format_rate = function (rate){
-    if(rate){
-        var r = {};
-
-        r._id         = rate._id;
-        r.business    = rate.business;
-        r.user        = rate.user;
-        r.rate        = rate.rate;
-
-        return r;
-    }
-
-    return rate;
-}
-
-var format_rates = function (rates){
-    if(rates && rates.constructor === Array){
-        // Format Array
-        if(rates.length){
-            var return_value = [];
-            for(var i = 0; i < rates.length; i++){
-                return_value.push(format_rate(rates[i]));
-            }
-
-            return return_value;
-        } else {
-            return [];
-        }
-    } else {
-        return format_rate(rates);
-    }
-}
-
 module.exports = function (opts) {
     var rateModel = opts.models.Rate;
     var failure_callback = require('./common.js')().failure_callback;
     var success_callback = require('./common.js')().success_callback;
+
+    var format_rate = function (rate){
+        if(rate){
+            var r = {};
+            var user = require('./user.js')(opts);
+
+            r._id         = rate._id;
+            r.business    = rate.business;
+            r.user        = user.format_user(rate.user);
+            r.rate        = rate.rate;
+            r.comment     = rate.comment;
+
+            return r;
+        }
+
+        return rate;
+    }
+
+    var format_rates = function (rates){
+        if(rates && rates.constructor === Array){
+            // Format Array
+            if(rates.length){
+                var return_value = [];
+                for(var i = 0; i < rates.length; i++){
+                    return_value.push(format_rate(rates[i]));
+                }
+
+                return return_value;
+            } else {
+                return [];
+            }
+        } else {
+            return format_rate(rates);
+        }
+    }
         
     return {
         "format_rates" : format_rates,
@@ -43,7 +45,8 @@ module.exports = function (opts) {
         	// Get Request Parameters
             var business    = req.body.business,
             	user	    = req.body.user,
-            	rate        = req.body.rate;
+            	rate        = req.body.rate,
+                comment     = req.body.comment;
 
             // Check If Rate Already Exists
 			var query = rateModel.findOne({name: name});
@@ -61,6 +64,7 @@ module.exports = function (opts) {
                 r.business  = business;
                 r.user	    = user;
                 r.rate      = (rate)?rate:0;
+                r.comment   = (comment)?comment:"";
 				
 				r.save(function (err, new_rate) {
 					if (err) {
@@ -79,9 +83,9 @@ module.exports = function (opts) {
 			var query;
 
 			if(business){
-				query = rateModel.find({business : business});
+				query = rateModel.find({business : business}).populate('user');
 			} else {
-				query = rateModel.find({});
+				query = rateModel.find({}).populate('user');
 			}
 
 			query.exec(function(err, rates){
@@ -99,7 +103,8 @@ module.exports = function (opts) {
         	// Get Request Parameters
             var business    = req.body.business,
                 user        = req.body.user,
-                rate        = req.body.rate;
+                rate        = req.body.rate,
+                comment     = req.body.comment;
 
             // Check If Id is correctly posted
             if(!business || !user){
@@ -120,6 +125,7 @@ module.exports = function (opts) {
                 if(business) r.business = business;
                 if(user) r.user = user;
                 if(rate) r.rate = rate;
+                if(comment) r.comment = comment;
 				
 				r.save(function (err, new_rate) {
 					if (err) {

@@ -6,12 +6,14 @@ module.exports = function (opts) {
     var format_guide = function (guide){
         if(guide){
             var g = {};
+            var guidecat = require('./guidecat.js')(opts);
 
-            g._id   = guide._id;
-            g.type  = guide.type;
-            g.title = guide.title;
-            g.text  = guide.text;
-            g.photo = guide.photo;
+            g._id       = guide._id;
+            g.type      = guide.type;
+            g.title     = guide.title;
+            g.text      = guide.text;
+            g.photo     = guide.photo;
+            g.category  = guidecat.format_category(guide.category);
 
             return g;
         }
@@ -42,10 +44,11 @@ module.exports = function (opts) {
         "format_guidees" : format_guidees,
         "post#guide/create" : function (req, res) {
         	// Get Request Parameters
-            var type    = req.body.type,
-            	title	= req.body.title,
-            	text  	= req.body.text,
-                photo   = req.body.photo;
+            var type        = req.body.type,
+            	title	    = req.body.title,
+            	text  	    = req.body.text,
+                category    = req.body.category,
+                photo       = req.body.photo;
 
             // Validate Input
             if(!title || !text){
@@ -65,10 +68,11 @@ module.exports = function (opts) {
 
                 var b = new guideModel();
 
-                g.type  = (type)?type:"YES";
-                g.title	= (title)?title:"";
-                g.text  = (text)?text:"";
-                g.photo = (photo)?photo:"";
+                g.type      = (type)?type:"YES";
+                g.title	    = (title)?title:"";
+                g.text      = (text)?text:"";
+                g.photo     = (photo)?photo:"";
+                g.category  = (category)?category:null;
 				
 				g.save(function (err, new_guide) {
 					if (err) {
@@ -87,9 +91,9 @@ module.exports = function (opts) {
 			var query;
 
 			if(_id){
-				query = guideModel.findOne({_id : _id});
+				query = guideModel.findOne({_id : _id}).populate('category');
 			} else {
-				query = guideModel.find({});
+				query = guideModel.find({}).populate('category');
 			}
 
 			query.exec(function(err, guide){
@@ -106,11 +110,12 @@ module.exports = function (opts) {
 
 		"post#guide/update" : function (req, res) {
         	// Get Request Parameters
-            var id      = req.body.id,
-                type    = req.body.type,
-                title   = req.body.title,
-                text    = req.body.text,
-                photo   = req.body.photo;
+            var id          = req.body.id,
+                type        = req.body.type,
+                title       = req.body.title,
+                text        = req.body.text,
+                photo       = req.body.photo,
+                category    = req.body.category;
 
             // Check If Id is correctly posted
             if(!id){
@@ -128,10 +133,11 @@ module.exports = function (opts) {
                 	return failure_callback(res, "Guide Not Found!");
                 }
 
-                g.type  = (type)?type:g.type;
-                g.title = (title)?title:g.type;
-                g.text  = (text)?text:g.text;
-                g.photo = (photo)?photo:g.photo;
+                g.type      = (type)?type:g.type;
+                g.title     = (title)?title:g.type;
+                g.text      = (text)?text:g.text;
+                g.photo     = (photo)?photo:g.photo;
+                g.category  = (category)?category:g.category;
 				
 				g.save(function (err, new_guide) {
 					if (err) {
