@@ -37968,8 +37968,8 @@ angular.module('pascalprecht.translate')
 
 var Config = {
 	api: {
-		//endPoint : "http://chchedu.herokuapp.com/api/"
-		endPoint : "http://172.16.1.52:9010/api/"
+		endPoint : "http://chchedu.herokuapp.com/api/"
+		//endPoint : "http://172.16.1.52:9010/api/"
 	},
 	slug: {
 		login : "admin/login",
