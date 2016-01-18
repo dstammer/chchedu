@@ -66,19 +66,14 @@ app.controller("createGuideCtrl", ["$scope", "$http", "Utils", function ($scope,
 			FormsPickers.init();
 		},
 		validate : function(){
-			if(!$scope.guide.name || !$scope.guide.description || !$scope.guide.address || !$scope.guide.location.lng || !$scope.guide.location.lat || !$scope.guide.place){
+			if(!$scope.guide.title || !$scope.guide.text || (!$('#inlineRadio1').prop('checked') && !$('#inlineRadio2').prop('checked'))){
 				$('#warning_btn').click();
 				return false;
 			}
 
-			var price = $("#price").html();
-			price = price.replace("($)", "");
-
-			$scope.guide.start_date = $("#start_date").val() + " " + $('#start_time').val();
-			$scope.guide.price = price;
-			$scope.guide.address = $('#addressAutoComplete').val();
-			$scope.guide.category = $('#categorySelector').val();
 			$scope.guide.photo = Utils.getBase64Image(document.getElementById('previewPhoto'));
+			$scope.guide.type = $('#inlineRadio2').prop('checked');
+			$scope.guide.category = $('#categorySelector').val();
 
 			return true;
 		}

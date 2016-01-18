@@ -1,0 +1,159 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title"><h4>USER CREATION FORM</h4></div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+
+				<div class="row example-row">
+					<div class="col-md-3">Name</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="User Name" ng-model="user.name">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Email</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Email" ng-model="user.email">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Password</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Nationality</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<select class="selecter" id="nationalitySelector">
+						</select>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Birthday</div><!--.col-md-3-->
+					<div class="col-md-9">
+
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" style="width: 200px" id="birthday" class="form-control bootstrap-daterangepicker-basic" value="2000-01-01" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Address</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="User Address" id="addressAutoComplete" ng-model="user.address">
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+					<div class="col-md-3"></div>
+				</div><!--.row-->	
+
+				<div class="row example-row">
+					<div class="col-md-3">Mobile</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="eg. 111-111-1111" ng-model="user.mobile">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Institution</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Institution" ng-model="user.institution">
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">When searching for deals the first deal cattegory I want to see is</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<select class="selecter" id="categorySelector">
+						</select>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+
+				<div class="row example-row">
+					<div class="col-md-3">Alert me when entering a place if a deal is available</div><col-md-3>
+					<div class="col-md-9">
+						<div class="switcher">
+							<input id="switcher1" type="checkbox" checked="checked" hidden="hidden">
+							<label for="switcher1"></label>
+						</div>
+					</div>
+				</div><row>
+
+				<div class="row example-row">
+					<div class="col-md-3">Alert me when a new deal is added that matches my preferred deal category</div><col-md-3>
+					<div class="col-md-9">
+						<div class="switcher">
+							<input id="switcher2" type="checkbox" checked="checked" hidden="hidden">
+							<label for="switcher2"></label>
+						</div>
+					</div>
+				</div><row>
+
+				<div class="row example-row">
+					<div class="col-md-3">Alert me if I have not redeemed a deal on my wishlist with 2 days to go</div><col-md-3>
+					<div class="col-md-9">
+						<div class="switcher">
+							<input id="switcher3" type="checkbox" checked="checked" hidden="hidden">
+							<label for="switcher3"></label>
+						</div>
+					</div>
+				</div><row>
+
+				<div class="form-buttons">
+					<div class="row">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="submit" class="btn btn-blue" ng-click="action.doCreate();">Create User</button>
+							<button type="button" class="btn btn-flat btn-default">Cancel</button>
+						</div>
+					</div>
+				</div>	
+
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+	</div><!--.col-md-12-->
+</div><!--.row-->

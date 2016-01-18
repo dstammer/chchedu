@@ -31,6 +31,19 @@ var format_user = function (user, includePassword){
         catch (e){
             u.settings = {};
         }
+		try{
+            u.deal_timestamp = JSON.parse(user.deal_timestamp);
+        }
+        catch (e){
+            u.deal_timestamp = {};
+        }
+		try{
+            u.event_timestamp = JSON.parse(user.event_timestamp);
+        }
+        catch (e){
+            u.event_timestamp = {};
+        }
+
 
         return u;
     }
@@ -155,7 +168,7 @@ module.exports = function (opts) {
                 if(err || !users){
                     console.log("-- Error : Querying User Failed --");
                     console.log(err);
-                    return failure_callback(res);
+                    return failure_callback(res, "Email/Password not correct.");
                 } else {
                     return res.json({ success : true, user_data : format_users(users) });
                 }
@@ -166,15 +179,42 @@ module.exports = function (opts) {
             var email       = req.body.email;
             var query = userModel.findOne({email: email});
 
-            query.exec(function(err, users){
-                if(err){
-                    console.log("-- Error : Querying User Failed --");
-                    console.log(err);
-                    return failure_callback(res);
-                } else {
-                    return res.json({ success : true });
-                }
-            });
+			var email = req.body.email;
+			if(!email){
+				req.flash('forgotMessage', 'Email should not be empty.');
+				return res.redirect('/login#forgot-password');
+			}
+			req.flash('email', email);
+			userModel.findOne({'email': email}, function(err, user){
+				if(user){
+					var nodemailer = require('nodemailer');
+					var mailer = nodemailer.createTransport({service: 'Gmail',
+																auth: {
+																	user: "info.ceisa.chch@gmail.com",
+																	pass: "Chchedu012"
+																}});
+					mailer.sendMail({
+						from: "info.ceisa.chch@gmail.com", // sender address
+						to: req.body.email, // list of receivers
+						subject: "Password Recovery", // Subject line
+						text: "Dear " + user.name + ", \n\n" + 
+							  'Your Password: ' + user.password + '\n\n' +
+							  "Thank you\nChchedu Support",
+						html: "Dear " + user.name + ", <br><br>" + 
+							  'Your Password: ' + user.password + '<br><br>' +
+							  "Thank you<br>Chchedu Support"
+					}, function (err) {
+						console.log(err);
+						if(err){
+							return failure_callback(res, "Service temporarily unavailable.");
+						} else {
+							return res.json({ success : true });
+						}
+					});
+				} else {
+                    return failure_callback(res, "User not found.");
+				}
+			});
         },
 
 		"post#user/update" : function (req, res) {
@@ -210,7 +250,7 @@ module.exports = function (opts) {
                 }
 
                 u.email 		= (email)?email:u.email;
-                u.password		= (password || password == "")?password:u.password;
+                u.password		= (password && password != "")?password:u.password;
                 u.name			= (name)?name:u.name;
                 u.address		= (address)?address:u.address;
                 u.mobile		= (mobile)?mobile:u.mobile;
@@ -221,6 +261,66 @@ module.exports = function (opts) {
                 u.deals			= (deals)?JSON.stringify(deals):u.deals;
                 u.events		= (events)?events:u.events;
                 u.settings		= (settings)?JSON.stringify(settings):u.settings;
+
+				if(deals){
+					var timestamp = {};
+					try{
+						timestamp = JSON.parse(u.deal_timestamp);
+					}
+					catch (e){
+						timestamp = {};
+					}
+
+					if(deals.wishlist){
+						if(!timestamp.wishlist) timestamp.wishlist = {};
+						for(var i = 0; i < deals.wishlist.length; i++){
+							if(!timestamp.wishlist[deals.wishlist[i]]){
+								timestamp.wishlist[deals.wishlist[i]] = new Date().getTime();
+							}
+						}
+					}
+					if(deals.redeemed){
+						if(!timestamp.redeemed) timestamp.redeemed = {};
+						for(var i = 0; i < deals.redeemed.length; i++){
+							if(!timestamp.redeemed[deals.redeemed[i]]){
+								timestamp.redeemed[deals.redeemed[i]] = new Date().getTime();
+							}
+						}
+					}
+
+					u.deal_timestamp = JSON.stringify(timestamp);
+				}
+
+				if(events){
+					var mEvents;
+					var timestamp = {};
+					try{
+						timestamp = JSON.parse(u.event_timestamp);
+					}
+					catch (e){
+						timestamp = {};
+					}
+
+					try{
+						mEvents = JSON.parse(events);
+					}
+					catch (e){
+						mEvents = [];
+					}
+
+					console.log(mEvents);
+
+					if(mEvents.events && mEvents.events.length){
+						for(var i = 0; i < mEvents.events.length; i++){
+							console.log(mEvents.events[i]);
+							if(!timestamp[mEvents.events[i]._id]){
+								timestamp[mEvents.events[i]._id] = new Date().getTime();
+							}
+						}
+
+						u.event_timestamp = JSON.stringify(timestamp);
+					}
+				}
 				
 				u.save(function (err, new_user) {
 					if (err) {

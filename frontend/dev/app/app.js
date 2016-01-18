@@ -1,7 +1,4 @@
 var app = angular.module("chchedu", ["ngRoute", "ui.router", "ngCookies", "ngImgCrop"]);
-var config = {
-	siteurl : 'https://www.taskflight.com/'
-}
 
 app.config(["$urlRouterProvider", "$locationProvider", "$stateProvider", "$httpProvider", function ($urlRouterProvider, $locationProvider, $stateProvider, $httpProvider) {
     $stateProvider.state("index", {
@@ -154,6 +151,60 @@ app.config(["$urlRouterProvider", "$locationProvider", "$stateProvider", "$httpP
           "main-content" : { 
             templateUrl: "partials/guide/list.html",
             controller: "listGuideCtrl"
+          }
+       },
+       requireLogin : true
+    }).state("ambassador", {
+       url: "/ambassador/:ambassador_id",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/ambassador/ambassador.html",
+            controller: "ambassadorCtrl"
+          }
+       },
+       requireLogin : true
+    }).state("createAmbassador", {
+       url: "/createAmbassador",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/ambassador/create.html",
+            controller: "createAmbassadorCtrl"
+          }
+       },
+       requireLogin : true
+    }).state("listAmbassador", {
+       url: "/listAmbassador",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/ambassador/list.html",
+            controller: "listAmbassadorCtrl"
+          }
+       },
+       requireLogin : true
+    }).state("user", {
+       url: "/user/:user_id",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/user/user.html",
+            controller: "userCtrl"
+          }
+       },
+       requireLogin : true
+    }).state("createUser", {
+       url: "/createUser",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/user/create.html",
+            controller: "createUserCtrl"
+          }
+       },
+       requireLogin : true
+    }).state("listUser", {
+       url: "/listUser",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/user/list.html",
+            controller: "listUserCtrl"
           }
        },
        requireLogin : true

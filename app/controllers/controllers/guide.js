@@ -66,9 +66,9 @@ module.exports = function (opts) {
                 	return failure_callback(res, "Another guide has already registered with same title.");
                 }
 
-                var b = new guideModel();
+                var g = new guideModel();
 
-                g.type      = (type)?type:"YES";
+                g.type      = (type)?"YES":"NO";
                 g.title	    = (title)?title:"";
                 g.text      = (text)?text:"";
                 g.photo     = (photo)?photo:"";
@@ -124,16 +124,16 @@ module.exports = function (opts) {
 
             // Check If Guide Already Exists
 			var query = guideModel.findOne({_id : id});
-            query.exec(function (err, b) {
+            query.exec(function (err, g) {
                 if (err) {
                     console.log("-- Error : Finding Guide --");
                     console.log(err);
                     return failure_callback(res);
-                } else if (!b) {
+                } else if (!g) {
                 	return failure_callback(res, "Guide Not Found!");
                 }
 
-                g.type      = (type)?type:g.type;
+                g.type      = (type)?"YES":"NO";
                 g.title     = (title)?title:g.type;
                 g.text      = (text)?text:g.text;
                 g.photo     = (photo)?photo:g.photo;

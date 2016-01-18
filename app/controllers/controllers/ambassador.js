@@ -14,6 +14,7 @@ module.exports = function (opts) {
             a.course        = ambassador.course;
             a.photo         = ambassador.photo;
             a.video         = ambassador.video;
+			a.description	= ambassador.description;
 
             return a;
         }
@@ -45,29 +46,30 @@ module.exports = function (opts) {
         "post#ambassador/create" : function (req, res) {
         	// Get Request Parameters
             var name        = req.body.name,
-            	nationality	= req.body.title,
-                institution = req.body.text,
-                course      = req.body.photo,
+            	nationality	= req.body.nationality,
+                institution = req.body.institution,
+                course      = req.body.course,
                 photo       = req.body.photo,
-                video       = req.body.video;
+                video       = req.body.video,
+				description	= req.body.description;
 
-            // Validate Input
-            if(!name || !nationality || !institution || !course || !video){
+			// Validate Input
+            if(!name || !nationality || !institution || !course || !video || !description){
             	return failure_callback(res, "Required Parameters are empty!");
             }
 
             // Check If Ambassador Already Exists
-			var query = ambassadorModel.findOne({title: title});
+			var query = ambassadorModel.findOne({name: name});
             query.exec(function (err, ambassador) {
                 if (err) {
                     console.log("-- Error : Finding Ambassador --");
                     console.log(err);
                     return failure_callback(res);
                 } else if (ambassador) {
-                	return failure_callback(res, "Another ambassador has already registered with same title.");
+                	return failure_callback(res, "Another ambassador has already registered with same name.");
                 }
 
-                var b = new ambassadorModel();
+                var a = new ambassadorModel();
 
                 a.name          = (name)?name:"";
                 a.nationality   = (nationality)?nationality:"";
@@ -75,6 +77,7 @@ module.exports = function (opts) {
                 a.course        = (course)?course:"";
                 a.photo         = (photo)?photo:"";
                 a.video         = (video)?video:"";
+				a.description	= (description)?description:"";
 				
 				a.save(function (err, new_ambassador) {
 					if (err) {
@@ -112,13 +115,14 @@ module.exports = function (opts) {
 
 		"post#ambassador/update" : function (req, res) {
         	// Get Request Parameters
-            var id          = req.body.id,
-                name        = req.body.name,
-                nationality = req.body.title,
-                institution = req.body.text,
-                course      = req.body.photo,
+            var id			= req.body.id,
+				name        = req.body.name,
+            	nationality	= req.body.nationality,
+                institution = req.body.institution,
+                course      = req.body.course,
                 photo       = req.body.photo,
-                video       = req.body.video;
+                video       = req.body.video,
+				description	= req.body.description;
 
             // Check If Id is correctly posted
             if(!id){
@@ -127,12 +131,12 @@ module.exports = function (opts) {
 
             // Check If Ambassador Already Exists
 			var query = ambassadorModel.findOne({_id : id});
-            query.exec(function (err, b) {
+            query.exec(function (err, a) {
                 if (err) {
                     console.log("-- Error : Finding Ambassador --");
                     console.log(err);
                     return failure_callback(res);
-                } else if (!b) {
+                } else if (!a) {
                 	return failure_callback(res, "Ambassador Not Found!");
                 }
 
@@ -142,6 +146,7 @@ module.exports = function (opts) {
                 a.course        = (course)?course:a.course;
                 a.photo         = (photo)?photo:a.photo;
                 a.video         = (video)?video:a.video;
+				a.description	= (description)?description:a.description;
 				
 				a.save(function (err, new_ambassador) {
 					if (err) {

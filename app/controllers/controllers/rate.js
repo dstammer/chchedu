@@ -13,6 +13,7 @@ module.exports = function (opts) {
             r.user        = user.format_user(rate.user);
             r.rate        = rate.rate;
             r.comment     = rate.comment;
+			r.date		  = rate.date;
 
             return r;
         }
@@ -65,6 +66,7 @@ module.exports = function (opts) {
                 r.user	    = user;
                 r.rate      = (rate)?rate:0;
                 r.comment   = (comment)?comment:"";
+				r.date		= new Date().getTime();
 				
 				r.save(function (err, new_rate) {
 					if (err) {
@@ -126,6 +128,7 @@ module.exports = function (opts) {
                 if(user) r.user = user;
                 if(rate) r.rate = rate;
                 if(comment) r.comment = comment;
+				r.date		= new Date().getTime();
 				
 				r.save(function (err, new_rate) {
 					if (err) {

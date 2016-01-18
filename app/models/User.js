@@ -32,14 +32,17 @@ module.exports = function (opts) {
 		deals : {
             type: String
 		},
+		deal_timestamp : {
+			type: String
+		},
 		events : {
             type: String
 		},
+		event_timestamp : {
+			type: String
+		},
 		settings : {
             type: String
-		},
-		auth_token : {
-			type: String
 		}
     });
     

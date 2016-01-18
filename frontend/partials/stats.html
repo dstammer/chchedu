@@ -1,0 +1,232 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<div class="col-md-3"><h4>BUSINESSES</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="business_range" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+				<div class="row example-row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Business Name</th>
+									<th>Total Visits</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="b in business">
+									<td>{{$index}}</td>
+									<td>{{b.name}}</td>
+									<td>{{action.getBusinessStats(b);}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<div class="col-md-3"><h4>DEALS</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="deal_range" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+				<div class="row example-row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Deal Name</th>
+									<th>Business Name</th>
+									<th>Total Visits</th>
+									<th>Added to Wishlist</th>
+									<th>Redeemed</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="d in deal">
+									<td>{{$index}}</td>
+									<td>{{d.name}}</td>
+									<td>{{d.business.name}}</td>
+									<td>{{action.getDealStats(d);}}</td>
+									<td>{{action.getWishlist(d);}}</td>
+									<td>{{action.getRedeemed(d);}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<div class="col-md-3"><h4>EVENTS</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="event_range" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+				<div class="row example-row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Event Name</th>
+									<th>Total Visits</th>
+									<th>Added to My Event Page</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="e in event">
+									<td>{{$index}}</td>
+									<td>{{e.name}}</td>
+									<td>{{action.getEventStats(e);}}</td>
+									<td>{{action.getMyEvent(e);}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<div class="col-md-3"><h4>AMBASSADORS</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="ambassador_range" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+				<div class="row example-row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Ambassador Name</th>
+									<th>Total Visits</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="a in ambassador">
+									<td>{{$index}}</td>
+									<td>{{a.name}}</td>
+									<td>{{action.getAmbassadorStats(a);}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<div class="col-md-3"><h4>GUIDES</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="guide_range" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+				<div class="row example-row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Guide Title</th>
+									<th>Total Visits</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="g in guide">
+									<td>{{$index}}</td>
+									<td>{{g.title}}</td>
+									<td>{{action.getGuideStats(g);}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+	</div><!--.col-md-12-->
+</div><!--.row-->

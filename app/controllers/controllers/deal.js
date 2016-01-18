@@ -1,4 +1,3 @@
-
 module.exports = function (opts) {
     var dealModel = opts.models.Deal;
     var failure_callback = require('./common.js')().failure_callback;
@@ -76,7 +75,41 @@ module.exports = function (opts) {
                 d.redeem_enforced    = (redeem_enforced)?"YES":"NO";
                 d.description 		 = (description)?description:"";
                 d.business           = (business)?business:null;
-                d.category           = (business)?category:null;
+                d.category           = (category)?category:null;
+
+				var catModel = opts.models.DealCat,
+					userModel = opts.models.User;
+
+				catModel.find({}).exec(function(err, cats){
+					if(cats){
+						userModel.find({}).exec(function(err, users){
+							if(users){
+								for(var i = 0; i < users.length; i++){
+									var settings = {};
+									try{
+										settings = JSON.parse(users[i].settings);
+									}
+									catch (e){
+										settings = {};
+									}
+
+									if(settings["preference"] && settings["new_deal"] == "YES"){
+										for(var j = 0; j < cats.length; j++){
+											if(cats[j]._id.equals(category) && cats[j].name == settings["preference"]){
+												console.log(cats[j].name);
+												console.log(settings["preference"]);
+												console.log(users[i].device_token);
+												var notification = require('../../../notification.js');
+												notification.sendDevNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
+												notification.sendProdNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
+											}
+										}
+									}
+								}
+							}
+						});
+					}
+				});
 				
 				d.save(function (err, new_deal) {
 					if (err) {

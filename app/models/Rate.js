@@ -15,7 +15,10 @@ module.exports = function (opts) {
 		},
         comment : {
             type: String
-        }
+        },
+		date : {
+			type: Number
+		}
     });
     
     return Schema;

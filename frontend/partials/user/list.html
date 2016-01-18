@@ -1,0 +1,24 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title"><h4>USER LIST</h4></div>
+			</div><!--.panel-heading-->
+			<div class="panel-body without-padding">
+				<ul class="list-material">
+					<li class="has-action-left has-action-right">
+						<a href="#" class="visible">
+							<!--div class="list-action-left">
+								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
+							</div-->
+							<div class="list-content" ng-repeat="u in list" ui-sref="user({user_id:u._id})">
+								<span class="title">{{u.name}}</span>
+								<span class="caption">{{u.nationality}}</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+	</div><!--.col-md-12-->
+</div><!--.row-->

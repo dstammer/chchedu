@@ -1,0 +1,99 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title"><h4>AMBASSADOR CREATION FORM</h4></div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+
+				<div class="row example-row">
+					<div class="col-md-3">Name</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Ambassador Name" ng-model="ambassador.name">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Description</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<textarea class="form-control" rows="3" placeholder="Ambassador Description" ng-model="ambassador.description"></textarea>
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Nationality</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<select class="selecter" id="categorySelector">
+						</select>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Photo</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="form-group">
+							<label for="photoFile">Select Photo</label>
+							<input type="file" id="photoFile" accept="image/*">
+							<p class="help-block"><img id="previewPhoto" src="#" style="height:auto;width:auto;display:none;"></p>
+						</div><!--.form-group-->
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Course</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Course" ng-model="ambassador.course">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Institution</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Institution" ng-model="ambassador.institution">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->		
+
+				<div class="row example-row">
+					<div class="col-md-3">Video URL</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="eg. http://www.youtube.com/" ng-model="ambassador.video">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->		
+
+				<div class="form-buttons">
+					<div class="row">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="submit" class="btn btn-blue" ng-click="action.doCreate();">Create Ambassador</button>
+							<button type="button" class="btn btn-flat btn-default">Cancel</button>
+						</div>
+					</div>
+				</div>		
+
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+	</div><!--.col-md-12-->
+</div><!--.row-->

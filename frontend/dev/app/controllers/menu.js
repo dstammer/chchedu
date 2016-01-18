@@ -43,7 +43,10 @@ app.controller("menuCtrl", ["$scope", "$state", function ($scope, $state) {
     	listGuide : function(){
     		location.href = "/listGuide";
     	},
-    	listUsers : function(){
+        createUser : function(){
+            location.href = "/createUser";
+        },
+    	listUser : function(){
     		location.href = "/listUser";
     	},
     	createAmbassador : function(){
@@ -52,6 +55,10 @@ app.controller("menuCtrl", ["$scope", "$state", function ($scope, $state) {
     	listAmbassador : function(){
     		location.href = "/listAmbassador";
     	},
+        logout : function(){
+            localStorage.setItem("user", "");
+            location.href = location.href;
+        }
 
     }
 

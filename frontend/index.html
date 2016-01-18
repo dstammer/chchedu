@@ -159,15 +159,19 @@
 				<li>
 					<a href="javascript:;">Users</a>
 					<ul class="child-menu">
-						<li><a ui-sref="listUsers">Users List</a></li>
+						<li><a ng-click="goTo.createUser();">Create a new user</a></li>
+						<li><a ng-click="goTo.listUser();">User List</a></li>
 					</ul>
 				</li>
 				<li>
 					<a href="javascript:;">Ambassadors</a>
 					<ul class="child-menu">
-						<li><a ui-sref="createBusiness">Create a new Ambassador</a></li>
-						<li><a ui-sref="listBusiness">Ambassador List</a></li>
+						<li><a ng-click="goTo.createAmbassador();">Create a new Ambassador</a></li>
+						<li><a ng-click="goTo.listAmbassador();">Ambassador List</a></li>
 					</ul>
+				</li>
+				<li ng-click="goTo.logout();">
+					<a>Log out</a>
 				</li>
 			</ul>
 		</div><!--.menu-layer-->

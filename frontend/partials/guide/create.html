@@ -11,7 +11,7 @@
 					<div class="col-md-9">
 						<div class="inputer">
 							<div class="input-wrapper">
-								<input type="text" class="form-control" placeholder="Guide Title" ng-model="guide.name">
+								<input type="text" class="form-control" placeholder="Guide Title" ng-model="guide.title">
 							</div>
 						</div>
 
@@ -51,10 +51,16 @@
 				<div class="row example-row">
 					<div class="col-md-3">Can a user redeem the deals from this guide multiple times?</div><!--.col-md-3-->
 					<div class="col-md-9">
-						<div class="switcher">
-							<input id="switcher1" type="checkbox" hidden="hidden">
-							<label for="switcher1"></label>
-						</div><!--.switcher-->
+						<div class="clearfix">
+							<div class="radioer form-inline">
+								<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="pre">
+								<label for="inlineRadio1">Pre-Arrival</label>
+							</div>
+							<div class="radioer form-inline">
+								<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="post">
+								<label for="inlineRadio2">Arrival</label>
+							</div>
+						</div>
 					</div><!--.col-md-9-->
 				</div><!--.row-->		
 
