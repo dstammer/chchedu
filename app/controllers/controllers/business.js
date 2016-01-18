@@ -106,7 +106,7 @@ module.exports = function (opts) {
                 b.address            = (address)?address:"";
                 b.photo              = (photo)?photo:"";
                 b.category           = (category)?category:null;
-                b.redeem_enforced    = (redeem_enforced)?redeem_enforced:"NO";
+                b.redeem_enforced    = (redeem_enforced)?"YES":"NO";
    
                 b.price_range	= (price_range)?JSON.stringify(price_range):"{}";
                 b.open_time		= (open_time)?JSON.stringify(open_time):"{}";
@@ -186,7 +186,7 @@ module.exports = function (opts) {
                 b.address           = (address)?address:b.address;
                 b.photo             = (photo)?photo:b.photo;
                 b.category          = (category)?category:b.category;
-                b.redeem_enforced   = (redeem_enforced)?redeem_enforced:b.redeem_enforced;
+                b.redeem_enforced   = (redeem_enforced)?"YES":"NO";
    
                 b.price_range   = (price_range)?JSON.stringify(price_range):b.price_range;
                 b.open_time     = (open_time)?JSON.stringify(open_time):b.open_time;

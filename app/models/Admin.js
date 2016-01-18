@@ -7,9 +7,6 @@ module.exports = function (opts) {
 		},
 		password : {
             type: String
-		},
-		name : {
-            type: String
 		}
     });
     

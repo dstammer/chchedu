@@ -73,7 +73,7 @@ module.exports = function (opts) {
 
                 d.name   		     = name;
                 d.expiry_date	     = (expiry_date)?expiry_date:"";
-                d.redeem_enforced    = (redeem_enforced)?redeem_enforced:"";
+                d.redeem_enforced    = (redeem_enforced)?"YES":"NO";
                 d.description 		 = (description)?description:"";
                 d.business           = (business)?business:null;
                 d.category           = (business)?category:null;
@@ -113,7 +113,8 @@ module.exports = function (opts) {
 
 		"post#deal/update" : function (req, res) {
         	// Get Request Parameters
-            var name            = req.body.name,
+            var id				= req.body.id,
+				name            = req.body.name,
                 expiry_date     = req.body.expiry_date,
                 redeem_enforced = req.body.redeem_enforced,
                 description     = req.body.description,
@@ -138,7 +139,7 @@ module.exports = function (opts) {
 
                 d.name              = (name)?name:d.name;
                 d.expiry_date       = (expiry_date)?expiry_date:d.expiry_date;
-                d.redeem_enforced   = (redeem_enforced)?redeem_enforced:d.redeem_enforced;
+                d.redeem_enforced   = (redeem_enforced)?"YES":"NO";
                 d.description       = (description)?description:d.description;
                 d.business          = (business)?business:d.business;
                 d.category          = (category)?category:d.category;

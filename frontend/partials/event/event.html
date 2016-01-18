@@ -1,0 +1,122 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title"><h4>{{(event.name)?event.name:"MANAGE EVENT"}}</h4></div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+
+				<div class="row example-row">
+					<div class="col-md-3">Name</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Event Name" ng-model="event.name">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Description</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<textarea class="form-control" rows="3" placeholder="Description" ng-model="event.description"></textarea>
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Event Category</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<select class="selecter" id="categorySelector">
+						</select>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Photo</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="form-group">
+							<label for="photoFile">Select Event Photo</label>
+							<input type="file" id="photoFile" accept="image/*">
+							<p class="help-block"><img id="previewPhoto" src="#" style="height:auto;width:auto;display:none;"></p>
+						</div><!--.form-group-->
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Start Date & Time</div><!--.col-md-3-->
+					<div class="col-md-4">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" style="width: 200px" id="start_date" class="form-control bootstrap-daterangepicker-basic" value="2016-03-04" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><!--.col-md-4-->
+					<div class="col-md-1">AT</div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start_time">
+							</div>
+						</div>
+					</div>
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Price</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="nouislider nouislider-formatting"></div>
+						<div class="well well-sm example-val nouislider-formatting-value" id="price"></div>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Event Place</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Event Place" ng-model="event.place">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Address</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Event Address" id="addressAutoComplete" ng-model="event.address">
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+					<div class="col-md-3"></div>
+					<div class="col-md-9" id="mapDiv" style="height:350px;"></div><!--.col-md-9-->
+				</div><!--.row-->	
+
+				<div class="form-buttons">
+					<div class="row">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="submit" class="btn btn-blue" ng-click="action.doCreate();">Edit Event</button>
+							<button type="submit" class="btn btn-red" ng-click="action.doDelete();">Delete Event</button>
+						</div>
+					</div>
+				</div>	
+
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+	</div><!--.col-md-12-->
+</div><!--.row-->

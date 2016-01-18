@@ -61,7 +61,8 @@ module.exports = function (opts) {
             	price    	= req.body.price,
             	address		= req.body.address,
                 category    = req.body.category,
-                place       = req.body.place;
+                place       = req.body.place,
+				location	= req.body.location;
 
             // Validate Input
             if(!name || !location || !price || !start_date){
@@ -175,7 +176,8 @@ module.exports = function (opts) {
                 price       = req.body.price,
                 place       = req.body.place,
                 address     = req.body.address,
-                category    = req.body.category;
+                category    = req.body.category,
+				location	= req.body.location;
 
             // Check If Id is correctly posted
             if(!id){

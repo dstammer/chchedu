@@ -12,6 +12,15 @@ var app       = express(),
     secretKey = "hJKQg7dxMGzEWqf",
     templatesDir = path.join(__dirname, "emails");
 
+app.use(function(req, res, next){
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+    if (req.method == 'OPTIONS') res.send(200);
+    else next();
+});
+
 if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
     var store = new redisStore({
@@ -35,13 +44,12 @@ app.configure("production", function () {
 });
 
 app.configure(function () {
-//    app.use(express.static(__dirname + '/public'));
+    app.use(express.static(__dirname + '/frontend'));
     app.use(express.cookieParser());
     app.use(express.bodyParser({limit: '50mb'}));
     app.use(express.json({limit: '50mb'}));
     app.use(express.urlencoded({limit: '50mb'}));
     app.use(express.methodOverride());
-//    app.use(express.session({ secret: secretKey, store: store, cookie: { secure: false, maxAge: 86400000 }, maxAge: 360*5}));
     app.use(express.cookieSession({ secret: secretKey, store: store, cookie: { secure: false, maxAge: 3600000  }, maxAge: 360*5}));
     app.use(passport.initialize());
     app.use(passport.session());
@@ -54,17 +62,25 @@ var startApp = function (err) {
         console.log(err);
     } else {
         app.listen(app.get("port"), function () {
-           console.log("App started on port: " + app.get("port"));
+            console.log("App started on port: " + app.get("port"));
 
-		   app.post("/api/login", passport.authenticate('local-login', { failureRedirect: '/api/login-success', successRedirect: '/api/login-success' }));
+		    app.post("/api/login", passport.authenticate('local-login', { failureRedirect: '/api/login-success', successRedirect: '/api/login-success' }));
 		   
-		   app.get("/api/login-success", function(req, res){
-			   if(req.isAuthenticated()){
-					res.json({success : true, user : req.user});
-			   } else {
-				   return res.json({success: false});
-			   }
-		   });
+		    app.get("/api/login-success", function(req, res){
+			    if(req.isAuthenticated()){
+                    res.json({success : true, user : req.user});
+			    } else {
+                    return res.json({success: false});
+                }
+            });
+
+            app.get("/login", function (req, res) {
+                res.sendfile(__dirname + "/frontend/login.html", {});
+            });
+
+            app.get("/*", function (req, res) {
+                res.sendfile(__dirname + "/frontend/index.html", {});
+            });
         });
     }
 }

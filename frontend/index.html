@@ -1,0 +1,242 @@
+<html ng-app="chchedu">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>ChChEdu - Backend Admin Panel</title>
+
+	<meta name="description" content="Pleasure is responsive, material admin dashboard panel">
+	<meta name="author" content="Teamfox">
+
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-touch-fullscreen" content="yes">
+
+	<!-- BEGIN CORE CSS -->
+	<link rel="stylesheet" href="../../assets/admin1/css/admin1.css">
+	<link rel="stylesheet" href="../../assets/globals/css/elements.css">
+	<!-- END CORE CSS -->
+
+	<!-- BEGIN PLUGINS CSS -->
+	<link rel="stylesheet" href="../../assets/globals/plugins/rickshaw/rickshaw.min.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/bxslider/jquery.bxslider.css">
+
+	<link rel="stylesheet" href="../../assets/globals/plugins/ion.rangeSlider/css/ion.rangeSlider.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css">
+
+	<link rel="stylesheet" href="../../assets/globals/plugins/nouislider/distribute/jquery.nouislider.min.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/nouislider/distribute/jquery.nouislider.pips.min.css">
+
+	<link rel="stylesheet" href="../../assets/globals/plugins/pnikolov-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/minicolors/jquery.minicolors.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/clockface/css/clockface.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="../../assets/globals/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+
+
+	<link rel="stylesheet" href="../../assets/globals/css/plugins.css">
+	<!-- END PLUGINS CSS -->
+
+	<!-- BEGIN SHORTCUT AND TOUCH ICONS -->
+	<!--link rel="shortcut icon" href="../../assets/globals/img/icons/favicon.ico">
+	<link rel="apple-touch-icon" href="../../assets/globals/img/icons/apple-touch-icon.png"-->
+	<!-- END SHORTCUT AND TOUCH ICONS -->
+
+	<script src="/angular/libs.js"></script>
+	<script src="/angular/app.js"></script>
+
+	<script src="../../assets/globals/plugins/modernizr/modernizr.min.js"></script>
+	<base href="/" />
+</head>
+<body>
+
+	<button type="button" class="btn btn-success pull-right toastr-notify hidden" data-toastr-type="success" data-toastr-close-others="true"  data-toastr-title="Success" data-toastr-notification="Successfully Submitted." id="success_btn">Error</button>
+	<button type="button" class="btn btn-success pull-right toastr-notify hidden" data-toastr-type="error" data-toastr-close-others="true"  data-toastr-title="Error" data-toastr-notification="Connection Error." id="err_btn">Error</button>
+	<button type="button" class="btn btn-success pull-right toastr-notify hidden" data-toastr-type="warning" data-toastr-close-others="true"  data-toastr-title="Warning" data-toastr-notification="Required Fields are Empty!" id="warning_btn">Error</button>
+
+	<div class="nav-bar-container">
+
+		<!-- BEGIN ICONS -->
+		<div class="nav-menu">
+			<div class="hamburger">
+				<span class="patty"></span>
+				<span class="patty"></span>
+				<span class="patty"></span>
+				<span class="patty"></span>
+				<span class="patty"></span>
+				<span class="patty"></span>
+			</div><!--.hamburger-->
+		</div><!--.nav-menu-->
+
+		
+
+		<div class="nav-user">
+			<div class="user">
+				<img src="../../assets/globals/img/faces/tolga-ergin.jpg" alt="">
+				<span class="badge">3</span>
+			</div><!--.user-->
+			<div class="cross">
+				<span class="line"></span>
+				<span class="line"></span>
+			</div><!--.cross-->
+		</div><!--.nav-user-->
+		<!-- END OF ICONS -->
+
+		<div class="nav-bar-border"></div><!--.nav-bar-border-->
+
+		<!-- BEGIN OVERLAY HELPERS -->
+		<div class="overlay">
+			<div class="starting-point">
+				<span></span>
+			</div><!--.starting-point-->
+			<div class="logo">PLEASURE</div><!--.logo-->
+		</div><!--.overlay-->
+
+		<div class="overlay-secondary"></div><!--.overlay-secondary-->
+		<!-- END OF OVERLAY HELPERS -->
+
+	</div><!--.nav-bar-container-->
+
+	<div class="content">
+
+		<div class="page-header full-content" ng-include="'partials/header.html'">
+		</div><!--.page-header-->
+		<div ui-view="main-content"></div>
+
+		<div class="footer-links margin-top-40">
+			<div class="row no-gutters bg-blue">
+			</div><!--.row-->
+		</div><!--.footer-links-->
+
+	</div><!--.content-->
+
+	<div class="layer-container">
+
+		<!-- BEGIN MENU LAYER -->
+		<div class="menu-layer" ng-controller="menuCtrl">
+			<ul>
+				<li ng-click="goTo.index();">
+					<a>Dashboard</a>
+				</li>
+				<li>
+					<a href="javascript:;">Businesses</a>
+					<ul class="child-menu">
+						<li ng-click="goTo.categoryBusiness();"><a>Manage Business Category</a></li>
+						<li ng-click="goTo.createBusiness();"><a>Create a new Business</a></li>
+						<li ng-click="goTo.listBusiness();"><a>Business List</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">Deals</a>
+					<ul class="child-menu">
+						<li ng-click="goTo.categoryDeal();"><a>Manage Deal Category</a></li>
+						<li ng-click="goTo.createDeal();"><a>Create a new Deal</a></li>
+						<li ng-click="goTo.listDeal();"><a>Deal List</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">Events</a>
+					<ul class="child-menu">
+						<li ng-click="goTo.categoryEvent();"><a>Manage Event Category</a></li>
+						<li ng-click="goTo.createEvent();"><a>Create a new Event</a></li>
+						<li ng-click="goTo.listEvent();"><a>Event List</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">Guides</a>
+					<ul class="child-menu">
+						<li ng-click="goTo.categoryGuide();"><a>Manage Main Guide Pages</a></li>
+						<li ng-click="goTo.createGuide();"><a>Create a new Guide Page</a></li>
+						<li ng-click="goTo.listGuide();"><a>Guide List</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">Users</a>
+					<ul class="child-menu">
+						<li><a ui-sref="listUsers">Users List</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">Ambassadors</a>
+					<ul class="child-menu">
+						<li><a ui-sref="createBusiness">Create a new Ambassador</a></li>
+						<li><a ui-sref="listBusiness">Ambassador List</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div><!--.menu-layer-->
+		<!-- END OF MENU LAYER -->
+
+		<!-- BEGIN SEARCH LAYER -->
+		<div class="search-layer">
+			
+		</div><!--.search-layer-->
+		<!-- END OF SEARCH LAYER -->
+
+		<!-- BEGIN USER LAYER -->
+		<div class="user-layer">
+			
+		</div><!--.user-layer-->
+		<!-- END OF USER LAYER -->
+
+	</div><!--.layer-container-->
+
+	<!-- BEGIN GLOBAL AND THEME VENDORS -->
+	<script src="../../assets/globals/js/global-vendors.js"></script>
+	<!-- END GLOBAL AND THEME VENDORS -->
+
+	<!-- BEGIN PLUGINS AREA -->
+	<!--script src="http://maps.google.com/maps/api/js?sensor=true&amp;libraries=places"></script-->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&&libraries=places"></script>
+	<script src="../../assets/globals/plugins/gmaps/gmaps.js"></script>
+	<script src="../../assets/globals/plugins/bxslider/jquery.bxslider.min.js"></script>
+	<script src="../../assets/globals/plugins/audiojs/audiojs/audio.min.js"></script>
+	<script src="../../assets/globals/plugins/d3/d3.min.js"></script>
+	<script src="../../assets/globals/plugins/rickshaw/rickshaw.min.js"></script>
+	<script src="../../assets/globals/plugins/jquery-knob/excanvas.js"></script>
+	<script src="../../assets/globals/plugins/jquery-knob/dist/jquery.knob.min.js"></script>
+	<script src="../../assets/globals/plugins/gauge/gauge.min.js"></script>
+	<!-- END PLUGINS AREA -->
+
+	<!-- PLEASURE -->
+	<script src="../../assets/globals/js/pleasure.js"></script>
+	<!-- ADMIN 1 -->
+	<script src="../../assets/admin1/js/layout.js"></script>
+
+	<!-- BEGIN PLUGINS AREA -->
+	<script src="../../assets/globals/plugins/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+	<script src="../../assets/globals/plugins/nouislider/distribute/jquery.nouislider.all.min.js"></script>
+	<!-- END PLUGINS AREA -->
+
+	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
+	<script src="../../assets/globals/scripts/forms-ion-range-slider.js"></script>
+	<script src="../../assets/globals/scripts/forms-no-ui-slider.js"></script>
+	<!-- END PLUGINS INITIALIZATION AND SETTINGS -->
+
+	<!-- BEGIN PLUGINS AREA -->
+	<script src="../../assets/globals/plugins/pnikolov-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+	<script src="../../assets/globals/plugins/minicolors/jquery.minicolors.min.js"></script>
+	<script src="../../assets/globals/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<script src="../../assets/globals/plugins/clockface/js/clockface.js"></script>
+	<!-- END PLUGINS AREA -->
+
+	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
+	<script src="../../assets/globals/scripts/forms-pickers.js"></script>
+	<!-- END PLUGINS INITIALIZATION AND SETTINGS -->
+
+	<script src="../../assets/globals/scripts/sliders.js"></script>
+	<!--script src="../../assets/globals/scripts/maps-google.js"></script-->
+	<script src="../../assets/globals/scripts/widget-audio.js"></script>
+	<script src="../../assets/globals/scripts/charts-knob.js"></script>
+
+	<!-- BEGIN INITIALIZATION-->
+	<!-- END INITIALIZATION-->
+
+</body>
+</html>

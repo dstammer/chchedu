@@ -95,7 +95,8 @@ module.exports = function (opts) {
 
 		"post#category/update" : function (req, res) {
         	// Get Request Parameters
-            var name            = req.body.name;
+            var id = req.body.id,
+				name = req.body.name;
 
             // Check If Id is correctly posted
             if(!id){
@@ -104,12 +105,12 @@ module.exports = function (opts) {
 
             // Check If Business Already Exists
 			var query = catModel.findOne({_id : id});
-            query.exec(function (err, b) {
+            query.exec(function (err, c) {
                 if (err) {
                     console.log("-- Error : Finding Business --");
                     console.log(err);
                     return failure_callback(res);
-                } else if (!b) {
+                } else if (!c) {
                 	return failure_callback(res, "Business Not Found!");
                 }
 

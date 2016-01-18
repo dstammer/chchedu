@@ -1,0 +1,379 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title"><h4>BUSINESS CREATION FORM</h4></div>
+			</div><!--.panel-heading-->
+			<div class="panel-body">
+
+				<div class="row example-row">
+					<div class="col-md-3">Name</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Business Name" ng-model="business.name">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Description</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<textarea class="form-control" rows="3" placeholder="Description" ng-model="business.description"></textarea>
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Business Category</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<select class="selecter" id="categorySelector">
+						</select>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Photo</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="form-group">
+							<label for="photoFile">Select Business Photo</label>
+							<input type="file" id="photoFile" accept="image/*">
+							<p class="help-block"><img id="previewPhoto" src="#" style="height:auto;width:auto;display:none;"></p>
+						</div><!--.form-group-->
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Phone Number</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="eg. 111-111-1111" ng-model="business.phone">
+							</div>
+						</div>
+
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Website</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="eg. www.test-business.com" ng-model="business.website">
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Price Range</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<input type="text" name="" class="ionrange-money1">
+					</div><!--.col-md-9-->
+				</div><!--.row-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Open Time</div><!--.col-md-3-->
+
+					<!--Monday-->
+					<div class="col-md-9">Monday</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start00">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="12:00 PM" data-format="hh:mm A" class="form-control clockface" id="end00">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="2:00 PM" data-format="hh:mm A" class="form-control clockface" id="start01">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="6:00 PM" data-format="hh:mm A" class="form-control clockface" id="end01">
+							</div>
+						</div>
+					</div><!--Monday-->
+
+
+					<div class="col-md-3"></div>
+					<!--Tuesday-->
+					<div class="col-md-9">Tuesday</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start10">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="12:00 PM" data-format="hh:mm A" class="form-control clockface" id="end10">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="2:00 PM" data-format="hh:mm A" class="form-control clockface" id="start11">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="6:00 PM" data-format="hh:mm A" class="form-control clockface" id="end11">
+							</div>
+						</div>
+					</div><!--Tuesday-->
+
+
+					<div class="col-md-3"></div>
+					<!--Wednesday-->
+					<div class="col-md-9">Wednesday</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start20">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="12:00 PM" data-format="hh:mm A" class="form-control clockface" id="end20">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="2:00 PM" data-format="hh:mm A" class="form-control clockface" id="start21">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="6:00 PM" data-format="hh:mm A" class="form-control clockface" id="end21">
+							</div>
+						</div>
+					</div><!--Wednesday-->
+
+
+					<div class="col-md-3"></div>
+					<!--Thursday-->
+					<div class="col-md-9">Thursday</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start30">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="12:00 PM" data-format="hh:mm A" class="form-control clockface" id="end30">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="2:00 PM" data-format="hh:mm A" class="form-control clockface" id="start31">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="6:00 PM" data-format="hh:mm A" class="form-control clockface" id="end31">
+							</div>
+						</div>
+					</div><!--Thursday-->
+
+
+					<div class="col-md-3"></div>
+					<!--Friday-->
+					<div class="col-md-9">Friday</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start40">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="12:00 PM" data-format="hh:mm A" class="form-control clockface" id="end40">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="2:00 PM" data-format="hh:mm A" class="form-control clockface" id="start41">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="6:00 PM" data-format="hh:mm A" class="form-control clockface" id="end41">
+							</div>
+						</div>
+					</div><!--Friday-->
+
+
+					<div class="col-md-3"></div>
+					<!--Saturday-->
+					<div class="col-md-9">Saturday</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start50">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="12:00 PM" data-format="hh:mm A" class="form-control clockface" id="end50">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="2:00 PM" data-format="hh:mm A" class="form-control clockface" id="start51">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="6:00 PM" data-format="hh:mm A" class="form-control clockface" id="end51">
+							</div>
+						</div>
+					</div><!--Saturday-->
+
+
+					<div class="col-md-3"></div>
+					<!--Sunday-->
+					<div class="col-md-9">Sunday</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="8:00 AM" data-format="hh:mm A" class="form-control clockface" id="start60">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="12:00 PM" data-format="hh:mm A" class="form-control clockface" id="end60">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="2:00 PM" data-format="hh:mm A" class="form-control clockface" id="start61">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"> To </div>
+					<div class="col-md-4">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" value="6:00 PM" data-format="hh:mm A" class="form-control clockface" id="end61">
+							</div>
+						</div>
+					</div><!--Sunday-->
+
+
+				</div><!--.row-->
+
+				<!--div class="row example-row">
+					<div class="col-md-3">Can a user redeem the deals from this business multiple times?</div><!--.col-md-3>
+					<div class="col-md-9">
+						<div class="switcher">
+							<input id="switcher1" type="checkbox" hidden="hidden">
+							<label for="switcher1"></label>
+						</div>
+					</div>
+				</div--><!--.row-->		
+
+				<div class="row example-row">
+					<div class="col-md-3">Address</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="inputer">
+							<div class="input-wrapper">
+								<input type="text" class="form-control" placeholder="Business Address" id="addressAutoComplete" ng-model="business.address">
+							</div>
+						</div>
+					</div><!--.col-md-9-->
+					<div class="col-md-3"></div>
+					<div class="col-md-9" id="mapDiv" style="height:350px;"></div><!--.col-md-9-->
+				</div><!--.row-->	
+
+				<div class="form-buttons">
+					<div class="row">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="submit" class="btn btn-blue" ng-click="action.doCreate();">Create Business</button>
+							<button type="button" class="btn btn-flat btn-default">Cancel</button>
+						</div>
+					</div>
+				</div>	
+
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+	</div><!--.col-md-12-->
+</div><!--.row-->
