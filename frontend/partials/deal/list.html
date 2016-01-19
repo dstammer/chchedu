@@ -11,7 +11,7 @@
 							<!--div class="list-action-left">
 								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
 							</div-->
-							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})">
+							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})" ng-show="!action.isExpired(d);">
 								<span class="title">{{d.name}} - {{d.business.name}}</span>
 								<span class="caption">{{d.description}}</span>
 							</div>
@@ -33,7 +33,7 @@
 							<!--div class="list-action-left">
 								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
 							</div-->
-							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})">
+							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})" ng-show="action.isExpired(d);">
 								<span class="title">{{d.name}} - {{d.business.name}}</span>
 								<span class="caption">{{d.description}}</span>
 							</div>
