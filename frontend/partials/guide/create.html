@@ -18,16 +18,26 @@
 					</div><!--.col-md-9-->
 				</div><!--.row-->
 
-				<div class="row example-row">
-					<div class="col-md-3">Text</div><!--.col-md-3-->
+				<!--div class="row example-row">
+					<div class="col-md-3">Text</div>
 					<div class="col-md-9">
 						<div class="inputer">
 							<div class="input-wrapper">
 								<textarea class="form-control" rows="3" placeholder="Guide Text" ng-model="guide.text"></textarea>
 							</div>
 						</div>
+					</div>
+				</div-->
+
+				<div class="row example-row">
+					<div class="col-md-3">Text</div><!--.col-md-3-->
+					<div class="col-md-9">
+						<div class="summernote summernote-default" id="guide_text">
+						</div>
 					</div><!--.col-md-9-->
 				</div><!--.row-->
+
+				
 
 				<div class="row example-row">
 					<div class="col-md-3">Guide Main Page</div><!--.col-md-3-->
@@ -38,18 +48,18 @@
 				</div><!--.row-->
 
 				<div class="row example-row">
-					<div class="col-md-3">Image</div><!--.col-md-3-->
+					<div class="col-md-3">Image</div>
 					<div class="col-md-9">
 						<div class="form-group">
 							<label for="photoFile">Select Guide Image</label>
 							<input type="file" id="photoFile" accept="image/*">
 							<p class="help-block"><img id="previewPhoto" src="#" style="height:auto;width:auto;display:none;"></p>
-						</div><!--.form-group-->
-					</div><!--.col-md-9-->
-				</div><!--.row-->
+						</div>
+					</div>
+				</div>
 
 				<div class="row example-row">
-					<div class="col-md-3">Can a user redeem the deals from this guide multiple times?</div><!--.col-md-3-->
+					<div class="col-md-3">Type</div><!--.col-md-3-->
 					<div class="col-md-9">
 						<div class="clearfix">
 							<div class="radioer form-inline">

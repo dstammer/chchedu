@@ -64,8 +64,10 @@ app.controller("createGuideCtrl", ["$scope", "$http", "Utils", function ($scope,
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			FormsWysiwyg.init();
 		},
 		validate : function(){
+			$scope.guide.text = $('.note-editable').html();
 			if(!$scope.guide.title || !$scope.guide.text || (!$('#inlineRadio1').prop('checked') && !$('#inlineRadio2').prop('checked'))){
 				$('#warning_btn').click();
 				return false;

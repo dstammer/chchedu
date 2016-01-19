@@ -110,6 +110,7 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 		},
 		initLayout : function(){
 			$('#categorySelector').val($scope.guide.category);
+			$('#guide_text').html($scope.guide.text);
 
 			Pleasure.init();
 			Layout.init();
@@ -117,6 +118,7 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			FormsWysiwyg.init();
 
 			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.guide.photo);
 			$('#previewPhoto').css({'display':'block'});
@@ -125,6 +127,7 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 			$('#inlineRadio2').prop('checked', $scope.guide.type == "YES");
 		},
 		validate : function(){
+			$scope.guide.text = $('.note-editable').html();
 			if(!$scope.guide.title || !$scope.guide.text || (!$('#inlineRadio1').prop('checked') && !$('#inlineRadio2').prop('checked'))){
 				$('#warning_btn').click();
 				return false;
