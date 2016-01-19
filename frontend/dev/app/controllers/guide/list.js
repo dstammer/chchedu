@@ -54,10 +54,10 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", function ($scope, 
 			for(var i = 0; i < $scope.list.length; i++){
 				var skip = false;
 				if(type != "All"){
-					if($scope.list[i].type && type == "true"){
+					if($scope.list[i].type && type == "YES"){
 						skip = true;
 					}
-					if(!$scope.list[i].type && type == "false"){
+					if(!$scope.list[i].type && type == "NO"){
 						skip = true;
 					}
 				}
