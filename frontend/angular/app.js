@@ -2014,6 +2014,11 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 			$('#categorySelector').val($scope.event.category);
 			$('.nouislider-formatting').attr('start', $scope.event.price * 1000);
 
+			var splt = $scope.event.start_date.split(' ');
+
+			$('#start_date').val(splt[0]);
+			$('#start_time').val(splt[1] + splt[2]);
+
 			Pleasure.init();
 			Layout.init();
 
