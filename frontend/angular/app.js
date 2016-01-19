@@ -1620,7 +1620,7 @@ app.controller("listDealCtrl", ["$scope", "$http", "$state", function ($scope, $
 		},
 		isExpired : function(d){
 			var date = new Date(Date.parse(d.expiry_date));
-			if(d.getTime() < new Date().getTime()){
+			if(date.getTime() < new Date().getTime()){
 				return true;
 			}
 
