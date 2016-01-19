@@ -2,16 +2,31 @@
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-heading">
-				<div class="panel-title"><h4>GUIDE LIST</h4></div>
+				<div class="panel-title">
+					<div class="row example-row"><h4>GUIDE LIST</h4></div>
+					<div class="row example-row">
+						<div class="col-md-2"></div><!--.col-md-3-->
+						<div class="col-md-2">Select Pre/Post Arrival</div>
+						<div class="col-md-3">
+							<select class="selecter" id="typeSelector">
+								<option value="All" selected="selected">All</option>
+								<option value="true">Pre-Arrival</option>
+								<option value="false">Arrival</option>
+							</select>
+						</div><!--.col-md-9-->
+						<div class="col-md-2">Select Guide Main Page</div>
+						<div class="col-md-3">
+							<select class="selecter" id="categorySelector">
+							</select>
+						</div><!--.col-md-9-->
+					</div>
+				</div>
 			</div><!--.panel-heading-->
-			<div class="panel-body without-padding">
+			<div class="panel-body">
 				<ul class="list-material">
-					<li class="has-action-left has-action-right">
+					<li class="has-action-left has-action-right" ng-repeat="b in action.filter()">
 						<a href="#" class="visible">
-							<!--div class="list-action-left">
-								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
-							</div-->
-							<div class="list-content" ng-repeat="b in list" ui-sref="guide({guide_id:b._id})">
+							<div class="list-content" ui-sref="guide({guide_id:b._id})">
 								<span class="title">{{b.title}}</span>
 								<span class="caption">{{b.text}}</span>
 							</div>

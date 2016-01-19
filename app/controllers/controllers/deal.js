@@ -93,15 +93,17 @@ module.exports = function (opts) {
 										settings = {};
 									}
 
-									if(settings["preference"] && settings["new_deal"] == "YES"){
+									if(settings["preference"] && settings["preference"].constructor === Array && settings["new_deal"] == "YES"){
 										for(var j = 0; j < cats.length; j++){
-											if(cats[j]._id.equals(category) && cats[j].name == settings["preference"]){
-												console.log(cats[j].name);
-												console.log(settings["preference"]);
-												console.log(users[i].device_token);
-												var notification = require('../../../notification.js');
-												notification.sendDevNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
-												notification.sendProdNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
+											for(var k = 0; k < settings["preference"].length; k++){
+												if(cats[j]._id.equals(category) && cats[j].name == settings["preference"][k]){
+													console.log(cats[j].name);
+													console.log(settings["preference"]);
+													console.log(users[i].device_token);
+													var notification = require('../../../notification.js');
+													notification.sendDevNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
+													notification.sendProdNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
+												}
 											}
 										}
 									}
