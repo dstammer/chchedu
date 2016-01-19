@@ -1617,6 +1617,14 @@ app.controller("listDealCtrl", ["$scope", "$http", "$state", function ($scope, $
 		},
 		goToDeal : function(business_id){
 			$state.go('business', {business_id : business_id});
+		},
+		isExpired : function(d){
+			var date = new Date(Date.parse(d.expiry_date));
+			if(d.getTime() < new Date().getTime()){
+				return true;
+			}
+
+			return false;
 		}
 	}
 

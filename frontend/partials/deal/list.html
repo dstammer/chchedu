@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-heading">
-				<div class="panel-title"><h4>DEAL LIST</h4></div>
+				<div class="panel-title"><h4>DEAL LIST(Active)</h4></div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
 				<ul class="list-material">
@@ -12,7 +12,29 @@
 								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
 							</div-->
 							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})">
-								<span class="title">{{d.name}}</span>
+								<span class="title">{{d.name}} - {{d.business.name}}</span>
+								<span class="caption">{{d.description}}</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div><!--.panel-body-->
+		</div><!--.panel-->
+
+
+		<div class="panel">
+			<div class="panel-heading">
+				<div class="panel-title"><h4>DEAL LIST(Expired)</h4></div>
+			</div><!--.panel-heading-->
+			<div class="panel-body without-padding">
+				<ul class="list-material">
+					<li class="has-action-left has-action-right">
+						<a href="#" class="visible">
+							<!--div class="list-action-left">
+								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
+							</div-->
+							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})">
+								<span class="title">{{d.name}} - {{d.business.name}}</span>
 								<span class="caption">{{d.description}}</span>
 							</div>
 						</a>
