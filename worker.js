@@ -117,6 +117,7 @@ function cron(){
 		var userModel = models.User,
 			dealModel = models.Deal,
 			eventModel = models.Event,
+			alertModel = models,Alert,
 			notification = require('./notification.js');
 
 		userModel.find({}).exec(function(err, users){
@@ -138,6 +139,11 @@ function cron(){
 												if(u.settings.redeem == "YES"){
 													notification.sendDevNotification(u.device_token, 'You have not redeemed the deal "' + deals[j].name + '".' + " And it's 2 days to go.");
 													notification.sendProdNotification(u.device_token, 'You have not redeemed the deal "' + deals[j].name + '".' + " And it's 2 days to go.");
+													var a = new alertModel();
+													a.user = u._id;
+													a.alert = 'You have not redeemed the deal "' + deals[j].name + '".' + " And it's 2 days to go.";
+													a.time = new Date().getTime();
+													a.save();
 												}
 //											}
 										}
@@ -150,6 +156,10 @@ function cron(){
 //											if(d2.getTime() - t >= 1000 * 3600 * 24 * 2 - 1000 * 60 * 10 && d2.getTime() - t < 1000 * 3600 * 24 * 2){
 												notification.sendDevNotification(u.device_token, 'How do you rate the offer "' + deals[j].name + '"?');
 												notification.sendProdNotification(u.device_token, 'How do you rate the offer "' + deals[j].name + '"?');
+												a.user = u._id;
+												a.alert ='How do you rate the offer "' + deals[j].name + '"?';
+												a.time = new Date().getTime();
+												a.save();
 //											}
 										}
 									}
@@ -168,6 +178,10 @@ function cron(){
 //											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * date - 1000 * 60 * 10 && d1.getTime() - d2.getTime() < 1000 * 3600 * 24 * date){
 												notification.sendDevNotification(u.device_token, "It's " + date + ' days before the event "' + events[j].name + '"');
 												notification.sendProdNotification(u.device_token, "It's " + date + ' days before the event "' + events[j].name + '"');
+												a.user = u._id;
+												a.alert = "It's " + date + ' days before the event "' + events[j].name + '"';
+												a.time = new Date().getTime();
+												a.save();
 //											}
 										}
 									}
