@@ -85,9 +85,6 @@ module.exports = function (opts) {
 					return res.json({ success : true });
 				}
 			});
-		} else {
-			return failure_callback(res, "Ambassador Not Found!");
-		}
 
             // Check If Question Already Exists
 			/*
