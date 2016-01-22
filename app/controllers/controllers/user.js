@@ -181,20 +181,18 @@ module.exports = function (opts) {
 
 			var email = req.body.email;
 			if(!email){
-				req.flash('forgotMessage', 'Email should not be empty.');
-				return res.redirect('/login#forgot-password');
+				return failure_callback(res, "Email should not be empty.");;
 			}
-			req.flash('email', email);
 			userModel.findOne({'email': email}, function(err, user){
 				if(user){
 					var nodemailer = require('nodemailer');
 					var mailer = nodemailer.createTransport({service: 'Gmail',
 																auth: {
-																	user: "info.ceisa.chch@gmail.com",
-																	pass: "Chchedu012"
+																	user: "christchurcheducated1@gmail.com",
+																	pass: "5012Wordsworth!"
 																}});
 					mailer.sendMail({
-						from: "info.ceisa.chch@gmail.com", // sender address
+						from: "christchurcheducated1@gmail.com", // sender address
 						to: req.body.email, // list of receivers
 						subject: "Password Recovery", // Subject line
 						text: "Dear " + user.name + ", \n\n" + 

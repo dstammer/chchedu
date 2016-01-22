@@ -50,18 +50,47 @@ module.exports = function (opts) {
             	message	   = req.body.message,
             	ambassador = req.body.ambassador;
 
-                console.log(name);
-                console.log(email);
-                console.log(subject);
-                console.log(message);
-                console.log(ambassador);
+            var ambassadorModel = opts.models.Ambassador;
 
             // Validate Input
             if(!name || !email || !message || !ambassador){
             	return failure_callback(res, "Required Parameters are empty!");
             }
 
+			var nodemailer = require('nodemailer');
+			var mailer = nodemailer.createTransport({service: 'Gmail',
+														auth: {
+															user: "christchurcheducated1@gmail.com",
+															pass: "5012Wordsworth!"
+														}});
+			mailer.sendMail({
+				from: "christchurcheducated1@gmail.com", // sender address
+				to: "info.ceisa.chch@gmail.com", // list of receivers
+				subject: "Question to Ambassadors", // Subject line
+				text: "To: " + a.name + ", \n\n" + 
+					  "From: " + name + ", \n\n" + 
+					  "Email: " + email + ", \n\n" + 
+					  "Subject: " + subject + ", \n\n" + 
+					  'Message: ' + message + '\n\n',
+				html: "To: " + a.name + "<br><br>" + 
+					  "From: " + name + "<br><br>" + 
+					  "Email: " + email + "<br><br>" + 
+					  "Subject: " + subject + "<br><br>" + 
+					  "Message: " + message + "<br><br>"
+			}, function (err) {
+				console.log(err);
+				if(err){
+					return failure_callback(res, "Service temporarily unavailable.");
+				} else {
+					return res.json({ success : true });
+				}
+			});
+		} else {
+			return failure_callback(res, "Ambassador Not Found!");
+		}
+
             // Check If Question Already Exists
+			/*
 			var query = questionModel.findOne({name: name});
             query.exec(function (err, question) {
                 if (err) {
@@ -89,7 +118,7 @@ module.exports = function (opts) {
 						return success_callback(res);
 					}
 				});
-            });
+            });*/
         },
 
 		"post#question/get" : function( req, res ) {
