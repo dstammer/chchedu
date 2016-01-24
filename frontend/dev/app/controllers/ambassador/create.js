@@ -1,4 +1,4 @@
-app.controller("createAmbassadorCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createAmbassadorCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -51,6 +51,7 @@ app.controller("createAmbassadorCtrl", ["$scope", "$http", "Utils", function ($s
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.ambassador.name || !$scope.ambassador.description || !$scope.ambassador.course || !$scope.ambassador.institution || !$scope.ambassador.video){

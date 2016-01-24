@@ -1,4 +1,4 @@
-app.controller("createGuideCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createGuideCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -65,6 +65,8 @@ app.controller("createGuideCtrl", ["$scope", "$http", "Utils", function ($scope,
 			FormsNoUISlider.init();
 			FormsPickers.init();
 			FormsWysiwyg.init();
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			$scope.guide.text = $('.note-editable').html();

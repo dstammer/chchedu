@@ -1,4 +1,4 @@
-app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -213,6 +213,8 @@ app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", function (
 			$('#previewPhoto').css({'display':'block'});
 
 			$scope.map.initMap();		
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.business.name || !$scope.business.description || !$scope.business.phone || !$scope.business.address || !$scope.business.location.lng || !$scope.business.location.lat){

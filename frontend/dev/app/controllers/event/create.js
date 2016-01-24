@@ -1,4 +1,4 @@
-app.controller("createEventCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createEventCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -100,6 +100,8 @@ app.controller("createEventCtrl", ["$scope", "$http", "Utils", function ($scope,
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.event.name || !$scope.event.description || !$scope.event.address || !$scope.event.location.lng || !$scope.event.location.lat || !$scope.event.place){

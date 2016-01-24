@@ -1,4 +1,4 @@
-app.controller("createUserCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createUserCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -93,6 +93,7 @@ app.controller("createUserCtrl", ["$scope", "$http", "Utils", function ($scope, 
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.user.name || !$scope.user.email || !$scope.user.address || !$scope.user.mobile || !$scope.user.institution || !$scope.user.password){

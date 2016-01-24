@@ -2,18 +2,32 @@
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-heading">
-				<div class="panel-title"><h4>BUSINESS LIST</h4></div>
+				<div class="panel-title">
+					<div class="col-md-3"><h4>BUSINESS LIST</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="business_range" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
 				<ul class="list-material">
-					<li class="has-action-left has-action-right">
+					<li class="has-action-left has-action-right" ng-repeat="b in list" ui-sref="business({business_id:b._id})">
 						<a href="#" class="visible">
-							<!--div class="list-action-left">
-								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
-							</div-->
-							<div class="list-content" ng-repeat="b in list" ui-sref="business({business_id:b._id})">
+							<div class="list-content">
 								<span class="title">{{b.name}}</span>
 								<span class="caption">{{b.description}}</span>
+								<span>TOTAL VISITS: {{action.getBusinessStats(b);}}</span>
 							</div>
 						</a>
 					</li>

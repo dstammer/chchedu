@@ -1,4 +1,4 @@
-app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -150,6 +150,7 @@ app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", function ($sco
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.deal.name || !$scope.deal.description){

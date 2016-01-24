@@ -1,4 +1,4 @@
-app.controller("categoryGuideCtrl", ["$scope", "$http", function ($scope, $http) {	
+app.controller("categoryGuideCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		Pleasure.init();
@@ -78,6 +78,7 @@ app.controller("categoryGuideCtrl", ["$scope", "$http", function ($scope, $http)
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.cat;
+					$rootScope.$broadcast("loaded");
 				} else {
 					$('#err_btn').click();
 				}

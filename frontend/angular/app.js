@@ -442,7 +442,7 @@ var Nationality = ["Afghan",
 				"Yugoslav",
 				"Zambian",
 				"Zimbabwean"];
-app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getAmbassadorList();
@@ -545,6 +545,7 @@ app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", function
 
 			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.ambassador.photo);
 			$('#previewPhoto').css({'display':'block'});
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.ambassador.name || !$scope.ambassador.description || !$scope.ambassador.course || !$scope.ambassador.institution || !$scope.ambassador.video){
@@ -568,7 +569,7 @@ app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", function
 		$scope.refresh();
 	});
 }]);
-app.controller("createAmbassadorCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createAmbassadorCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -621,6 +622,7 @@ app.controller("createAmbassadorCtrl", ["$scope", "$http", "Utils", function ($s
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.ambassador.name || !$scope.ambassador.description || !$scope.ambassador.course || !$scope.ambassador.institution || !$scope.ambassador.video){
@@ -644,12 +646,9 @@ app.controller("createAmbassadorCtrl", ["$scope", "$http", "Utils", function ($s
 		$scope.refresh();
 	});
 }]);
-app.controller("listAmbassadorCtrl", ["$scope", "$http", "$state", function ($scope, $http, $state) {
+app.controller("listAmbassadorCtrl", ["$scope", "$http", "$state", "$rootScope", function ($scope, $http, $state, $rootScope) {
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
-		Pleasure.init();
-		Layout.init();
-
 		$scope.action.getAmbassadorList();
 	}
 
@@ -663,20 +662,79 @@ app.controller("listAmbassadorCtrl", ["$scope", "$http", "$state", function ($sc
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.ambassador;
+					$scope.action.getStats();
 				} else {
 					$('#err_btn').click();
 				}
 			}).error(function() {
 				$('#err_btn').click();
 			});
+		},
+		getStats : function(){
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.getStats,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					$scope.stats = data.stats;
+					$scope.action.initLayout();
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
+		getAmbassadorStats : function(a){
+			if(!$scope.stats) return 0;
+
+			var d1, d2;
+
+			if($('#ambassador_range').val() == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var filter = $('#ambassador_range').val(),
+					splt = filter.split(' - ');
+				if(splt.length == 2){
+					d1 = new Date(splt[0]).getTime();
+					d2 = new Date(splt[1]).getTime();
+				} else {
+					d1 = 0;
+					d2 = 5453125348645;
+				}
+			}
+
+			var count = 0;
+			for(var i = 0; i < $scope.stats.length; i++){
+				if($scope.stats[i].ambassador == a._id){
+					if($scope.stats[i].time > d1 && $scope.stats[i].time < d2){
+						count++;
+					}
+				}
+			}
+
+			return count;
+		},
+		initLayout : function(){
+			Pleasure.init();
+			Layout.init();
+			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		}
 	}
+
+	$('#ambassador_range').change(function(){
+		$scope.$apply();
+	});
 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.refresh();
 	});
 }]);
-app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -891,6 +949,8 @@ app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", function (
 			$('#previewPhoto').css({'display':'block'});
 
 			$scope.map.initMap();		
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.business.name || !$scope.business.description || !$scope.business.phone || !$scope.business.address || !$scope.business.location.lng || !$scope.business.location.lat){
@@ -931,7 +991,7 @@ app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", function (
 		$scope.refresh();
 	});
 }]);
-app.controller("categoryBusinessCtrl", ["$scope", "$http", function ($scope, $http) {	
+app.controller("categoryBusinessCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		Pleasure.init();
@@ -1011,6 +1071,7 @@ app.controller("categoryBusinessCtrl", ["$scope", "$http", function ($scope, $ht
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.cat;
+					$rootScope.$broadcast("loaded");
 				} else {
 					$('#err_btn').click();
 				}
@@ -1024,7 +1085,7 @@ app.controller("categoryBusinessCtrl", ["$scope", "$http", function ($scope, $ht
 		$scope.refresh();
 	});
 }]);
-app.controller("createBusinessCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createBusinessCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -1139,6 +1200,7 @@ app.controller("createBusinessCtrl", ["$scope", "$http", "Utils", function ($sco
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.business.name || !$scope.business.description || !$scope.business.phone || !$scope.business.address || !$scope.business.location.lng || !$scope.business.location.lat){
@@ -1179,12 +1241,9 @@ app.controller("createBusinessCtrl", ["$scope", "$http", "Utils", function ($sco
 		$scope.refresh();
 	});
 }]);
-app.controller("listBusinessCtrl", ["$scope", "$http", "$state", function ($scope, $http, $state) {
+app.controller("listBusinessCtrl", ["$scope", "$http", "$state", "$rootScope", function ($scope, $http, $state, $rootScope) {
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
-		Pleasure.init();
-		Layout.init();
-
 		$scope.action.getBusinessList();
 	}
 
@@ -1198,6 +1257,7 @@ app.controller("listBusinessCtrl", ["$scope", "$http", "$state", function ($scop
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.business;
+					$scope.action.getStats();
 				} else {
 					$('#err_btn').click();
 				}
@@ -1205,16 +1265,74 @@ app.controller("listBusinessCtrl", ["$scope", "$http", "$state", function ($scop
 				$('#err_btn').click();
 			});
 		},
+		getStats : function(){
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.getStats,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					$scope.stats = data.stats;
+					$scope.action.initLayout();
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
+		getBusinessStats : function(b){
+			if(!$scope.stats) return 0;
+
+			var d1, d2;
+
+			if($('#business_range').val() == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var filter = $('#business_range').val(),
+					splt = filter.split(' - ');
+				if(splt.length == 2){
+					d1 = new Date(splt[0]).getTime();
+					d2 = new Date(splt[1]).getTime();
+				} else {
+					d1 = 0;
+					d2 = 5453125348645;
+				}
+			}
+
+			var count = 0;
+			for(var i = 0; i < $scope.stats.length; i++){
+				if($scope.stats[i].business == b._id){
+					if($scope.stats[i].time > d1 && $scope.stats[i].time < d2){
+						count++;
+					}
+				}
+			}
+
+			return count;
+		},
 		goToBusiness : function(business_id){
 			$state.go('business', {business_id : business_id});
+		},
+		initLayout : function(){
+			Pleasure.init();
+			Layout.init();
+			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		}
 	}
+
+	$('#business_range').change(function(){
+		$scope.$apply();
+	});
 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.refresh();
 	});
 }]);
-app.controller("categoryDealCtrl", ["$scope", "$http", function ($scope, $http) {	
+app.controller("categoryDealCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		Pleasure.init();
@@ -1294,6 +1412,7 @@ app.controller("categoryDealCtrl", ["$scope", "$http", function ($scope, $http) 
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.cat;
+					$rootScope.$broadcast("loaded");
 				} else {
 					$('#err_btn').click();
 				}
@@ -1307,7 +1426,7 @@ app.controller("categoryDealCtrl", ["$scope", "$http", function ($scope, $http) 
 		$scope.refresh();
 	});
 }]);
-app.controller("createDealCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createDealCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -1397,6 +1516,7 @@ app.controller("createDealCtrl", ["$scope", "$http", "Utils", function ($scope, 
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.deal.name || !$scope.deal.description){
@@ -1417,7 +1537,7 @@ app.controller("createDealCtrl", ["$scope", "$http", "Utils", function ($scope, 
 		$scope.refresh();
 	});
 }]);
-app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -1569,6 +1689,7 @@ app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", function ($sco
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.deal.name || !$scope.deal.description){
@@ -1589,12 +1710,9 @@ app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", function ($sco
 		$scope.refresh();
 	});
 }]);
-app.controller("listDealCtrl", ["$scope", "$http", "$state", function ($scope, $http, $state) {
+app.controller("listDealCtrl", ["$scope", "$http", "$state", "$rootScope", function ($scope, $http, $state, $rootScope) {
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
-		Pleasure.init();
-		Layout.init();
-
 		$scope.action.getDealList();
 	}
 
@@ -1608,6 +1726,24 @@ app.controller("listDealCtrl", ["$scope", "$http", "$state", function ($scope, $
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.deals;
+					$scope.action.getStats();
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
+		getStats : function(){
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.getStats,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					$scope.stats = data.stats;
+					$scope.action.initLayout();
 				} else {
 					$('#err_btn').click();
 				}
@@ -1625,14 +1761,154 @@ app.controller("listDealCtrl", ["$scope", "$http", "$state", function ($scope, $
 			}
 
 			return false;
+		},
+		getWishlist : function(d){
+			var count = 0;
+			if(!$scope.user || !$scope.user.length){
+				return 0;
+			}
+
+			var d1, d2, filter;
+			if(exp){
+				filter = $('#deal_range_1').val();
+			} else {
+				filter = $('#deal_range_2').val();
+			}
+
+			if(filter == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var splt = filter.split(' - ');
+
+				if(splt.length == 2){
+					d1 = new Date(splt[0]).getTime();
+					d2 = new Date(splt[1]).getTime();
+				} else {
+					d1 = 0;
+					d2 = 5453125348645;
+				}
+			}
+
+			for(var i = 0; i < $scope.user.length; i++){
+				if($scope.user[i].deals && $scope.user[i].deals.wishlist && $scope.user[i].deals.wishlist.length){
+					var wishlist = $scope.user[i].deals.wishlist;
+					for(var j = 0; j < wishlist.length; j++){
+						if(wishlist[j] == d._id){
+							if($scope.user[i].deal_timestamp && $scope.user[i].deal_timestamp.wishlist){
+								if($scope.user[i].deal_timestamp.wishlist[d._id] > d1 && $scope.user[i].deal_timestamp.wishlist[d._id] < d2){
+									count++;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return count;
+		},
+		getRedeemed : function(d){
+			var count = 0;
+			if(!$scope.user || !$scope.user.length){
+				return 0;
+			}
+
+			var d1, d2, filter;
+			if(exp){
+				filter = $('#deal_range_1').val();
+			} else {
+				filter = $('#deal_range_2').val();
+			}
+
+			if(filter == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var splt = filter.split(' - ');
+				if(splt.length == 2){
+					d1 = new Date(splt[0]).getTime();
+					d2 = new Date(splt[1]).getTime();
+				} else {
+					d1 = 0;
+					d2 = 5453125348645;
+				}
+			}
+
+			for(var i = 0; i < $scope.user.length; i++){
+				if($scope.user[i].deals && $scope.user[i].deals.redeemed && $scope.user[i].deals.redeemed.length){
+					var redeemed = $scope.user[i].deals.redeemed;
+					for(var j = 0; j < redeemed.length; j++){
+						if(redeemed[j] == d._id){
+							if($scope.user[i].deal_timestamp && $scope.user[i].deal_timestamp.redeemed){
+								if($scope.user[i].deal_timestamp.redeemed[d._id] > d1 && $scope.user[i].deal_timestamp.redeemed[d._id] < d2){
+									count++;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return count;
+		},
+		getDealStats : function(d, exp){
+			if(!$scope.stats) return 0;
+
+			var d1, d2, filter;
+			if(exp){
+				filter = $('#deal_range_1').val();
+			} else {
+				filter = $('#deal_range_2').val();
+			}
+
+			if(filter == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var splt = filter.split(' - ');
+				if(splt.length == 2){
+					d1 = new Date(splt[0]).getTime();
+					d2 = new Date(splt[1]).getTime();
+				} else {
+					d1 = 0;
+					d2 = 5453125348645;
+				}
+			}
+
+			var count = 0;
+			for(var i = 0; i < $scope.stats.length; i++){
+				if($scope.stats[i].deal == d._id){
+					if($scope.stats[i].time > d1 && $scope.stats[i].time < d2){
+						count++;
+					}
+				}
+			}
+
+			return count;
+		},
+		initLayout : function(){
+			Pleasure.init();
+			Layout.init();
+			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		}
 	}
+
+	$('#deal_range_1').change(function(){
+		$scope.$apply();
+	});
+
+	$('#deal_range_2').change(function(){
+		$scope.$apply();
+	});
 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.refresh();
 	});
 }]);
-app.controller("categoryEventCtrl", ["$scope", "$http", function ($scope, $http) {	
+app.controller("categoryEventCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		Pleasure.init();
@@ -1712,6 +1988,7 @@ app.controller("categoryEventCtrl", ["$scope", "$http", function ($scope, $http)
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.cat;
+					$rootScope.$broadcast("loaded");
 				} else {
 					$('#err_btn').click();
 				}
@@ -1725,7 +2002,7 @@ app.controller("categoryEventCtrl", ["$scope", "$http", function ($scope, $http)
 		$scope.refresh();
 	});
 }]);
-app.controller("createEventCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createEventCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -1827,6 +2104,8 @@ app.controller("createEventCtrl", ["$scope", "$http", "Utils", function ($scope,
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.event.name || !$scope.event.description || !$scope.event.address || !$scope.event.location.lng || !$scope.event.location.lat || !$scope.event.place){
@@ -1856,7 +2135,7 @@ app.controller("createEventCtrl", ["$scope", "$http", "Utils", function ($scope,
 		$scope.refresh();
 	});
 }]);
-app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -2029,7 +2308,9 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.event.photo);
 			$('#previewPhoto').css({'display':'block'});
 
-			$scope.map.initMap();		
+			$scope.map.initMap();	
+
+			$rootScope.$broadcast("loaded");	
 		},
 		validate : function(){
 			if(!$scope.event.name || !$scope.event.description || !$scope.event.address || !$scope.event.location.lng || !$scope.event.location.lat || !$scope.event.place){
@@ -2059,12 +2340,9 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 		$scope.refresh();
 	});
 }]);
-app.controller("listEventCtrl", ["$scope", "$http", "$state", function ($scope, $http, $state) {
+app.controller("listEventCtrl", ["$scope", "$http", "$state", "$rootScope", function ($scope, $http, $state, $rootScope) {
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
-		Pleasure.init();
-		Layout.init();
-
 		$scope.action.getEventList();
 	}
 
@@ -2078,20 +2356,126 @@ app.controller("listEventCtrl", ["$scope", "$http", "$state", function ($scope, 
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.event;
+					$scope.action.getStats();
 				} else {
 					$('#err_btn').click();
 				}
 			}).error(function() {
 				$('#err_btn').click();
 			});
+		},
+		getMyEvent : function(e){
+			var count = 0;
+			if(!$scope.user || !$scope.user.length){
+				return 0;
+			}
+
+			var d1, d2;
+
+			if($('#event_range').val() == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var filter = $('#event_range').val(),
+					splt = filter.split(' - ');
+				d1 = new Date(splt[0]).getTime();
+				d2 = new Date(splt[1]).getTime();
+			}
+
+			for(var i = 0; i < $scope.user.length; i++){
+				if($scope.user[i].events && $scope.user[i].events.events && $scope.user[i].events.events.length){
+					var events = $scope.user[i].events.events;
+					for(var j = 0; j < events.length; j++){
+						if(events[j]._id == e._id){
+							if($scope.user[i].event_timestamp && $scope.user[i].event_timestamp){
+								if($scope.user[i].event_timestamp[e._id] > d1 && $scope.user[i].event_timestamp[e._id] < d2){
+									count++;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return count;
+		},
+		getEventStats : function(b){
+			if(!$scope.stats) return 0;
+
+			var d1, d2, filter = $('#event_range').val();
+
+			if(filter == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var splt = filter.split(' - ');
+				if(splt.length == 2){
+					d1 = new Date(splt[0]).getTime();
+					d2 = new Date(splt[1]).getTime();
+				} else {
+					d1 = 0;
+					d2 = 5453125348645;
+				}
+			}
+
+			var count = 0;
+			for(var i = 0; i < $scope.stats.length; i++){
+				if($scope.stats[i].event == b._id){
+					if($scope.stats[i].time > d1 && $scope.stats[i].time < d2){
+						count++;
+					}
+				}
+			}
+
+			return count;
+		},
+		getStats : function(){
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.getStats,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					$scope.stats = data.stats;
+					$scope.action.initLayout();
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
+		isExpired : function(d){
+			var date = new Date(Date.parse(d.start_date));
+			if(date.getTime() > new Date().getTime()){
+				return true;
+			}
+
+			return false;
+		},
+		initLayout : function(){
+			Pleasure.init();
+			Layout.init();
+			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		}
 	}
+
+	$('#event_range_1').change(function(){
+		$scope.$apply();
+	});
+
+	$('#event_range_2').change(function(){
+		$scope.$apply();
+	});
 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.refresh();
 	});
 }]);
-app.controller("categoryGuideCtrl", ["$scope", "$http", function ($scope, $http) {	
+app.controller("categoryGuideCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		Pleasure.init();
@@ -2171,6 +2555,7 @@ app.controller("categoryGuideCtrl", ["$scope", "$http", function ($scope, $http)
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.cat;
+					$rootScope.$broadcast("loaded");
 				} else {
 					$('#err_btn').click();
 				}
@@ -2184,7 +2569,7 @@ app.controller("categoryGuideCtrl", ["$scope", "$http", function ($scope, $http)
 		$scope.refresh();
 	});
 }]);
-app.controller("createGuideCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createGuideCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -2251,6 +2636,8 @@ app.controller("createGuideCtrl", ["$scope", "$http", "Utils", function ($scope,
 			FormsNoUISlider.init();
 			FormsPickers.init();
 			FormsWysiwyg.init();
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			$scope.guide.text = $('.note-editable').html();
@@ -2276,7 +2663,7 @@ app.controller("createGuideCtrl", ["$scope", "$http", "Utils", function ($scope,
 		$scope.refresh();
 	});
 }]);
-app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -2403,6 +2790,8 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 
 			$('#inlineRadio1').prop('checked', $scope.guide.type == "NO");
 			$('#inlineRadio2').prop('checked', $scope.guide.type == "YES");
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			$scope.guide.text = $('.note-editable').html();
@@ -2428,7 +2817,7 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 		$scope.refresh();
 	});
 }]);
-app.controller("listGuideCtrl", ["$scope", "$http", "$state", function ($scope, $http, $state) {
+app.controller("listGuideCtrl", ["$scope", "$http", "$state", "$rootScope", function ($scope, $http, $state, $rootScope) {
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -2444,13 +2833,7 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", function ($scope, 
 				// Store user information to local storage
 				if(data.success){
 					$scope.list = data.guide;
-					var html = '';
-					html = html + '<option value="All">All</option>';
-					for(var i = 0; i < $scope.category.length; i++){
-						html = html + '"<option value="' + $scope.category[i]._id + '">' + $scope.category[i].name + "</option>";
-					}
-					$('#categorySelector').html(html);
-					$scope.action.initLayout();
+					$scope.action.getStats();
 				} else {
 					$('#err_btn').click();
 				}
@@ -2475,6 +2858,29 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", function ($scope, 
 				$('#err_btn').click();
 			});
 		},
+		getStats : function(){
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.getStats,
+			}).success(function(data) {
+				// Store user information to local storage
+				if(data.success){
+					$scope.stats = data.stats;
+					var html = '';
+					html = html + '<option value="All">All</option>';
+					for(var i = 0; i < $scope.category.length; i++){
+						html = html + '"<option value="' + $scope.category[i]._id + '">' + $scope.category[i].name + "</option>";
+					}
+					$('#categorySelector').html(html);
+
+					$scope.action.initLayout();
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
 		filter : function(){
 			if(!$scope.category || !$scope.list) return [];
 			var filtered = [],
@@ -2484,10 +2890,10 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", function ($scope, 
 			for(var i = 0; i < $scope.list.length; i++){
 				var skip = false;
 				if(type != "All"){
-					if($scope.list[i].type && type == "YES"){
+					if($scope.list[i].type == "YES" && type == "true"){
 						skip = true;
 					}
-					if(!$scope.list[i].type && type == "NO"){
+					if(!$scope.list[i].type == "NO" && type == "false"){
 						skip = true;
 					}
 				}
@@ -2507,7 +2913,44 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", function ($scope, 
 		initLayout : function(){
 			Pleasure.init();
 			Layout.init();
-		}
+			FormsPickers.init();
+
+			$rootScope.$broadcast("loaded");
+		},
+		getGuideStats : function(g){
+			if(!$scope.stats) return 0;
+
+			var d1, d2;
+
+			if($('#guide_range').val() == ""){
+				d1 = 0;
+				d2 = 5453125348645;
+			} else {
+				var filter = $('#guide_range').val(),
+					splt = filter.split(' - ');
+				if(splt.length == 2){
+					d1 = new Date(splt[0]).getTime();
+					d2 = new Date(splt[1]).getTime();
+				} else {
+					d1 = 0;
+					d2 = 5453125348645;
+				}
+			}
+
+			console.log(d1);
+			console.log(d2);
+
+			var count = 0;
+			for(var i = 0; i < $scope.stats.length; i++){
+				if($scope.stats[i].guide == g._id){
+					if($scope.stats[i].time > d1 && $scope.stats[i].time < d2){
+						count++;
+					}
+				}
+			}
+
+			return count;
+		},
 	}
 
 	$('#typeSelector').change(function(){
@@ -2515,6 +2958,10 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", function ($scope, 
 	});
 
 	$('#categorySelector').change(function(){
+		$scope.$apply();
+	});
+
+	$('#guide_range').change(function(){
 		$scope.$apply();
 	});
 
@@ -2556,6 +3003,19 @@ app.controller("headerCtrl", ["$scope", "$state", function ($scope, $state) {
 
 		console.log($state.current.name);
     }
+
+	$scope.$on('$stateChangeSuccess', function() {
+		$scope.refresh();
+	});
+}]);
+app.controller("loadCtrl", ["$scope", "$state", "$rootScope", function ($scope, $state, $rootScope) {		
+	$scope.refresh = function () {
+		$scope.loaded = true;
+    }
+
+	$rootScope.$on("loaded", function(){
+		$scope.loaded = false;
+	});
 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.refresh();
@@ -2705,7 +3165,7 @@ app.controller("menuCtrl", ["$scope", "$state", function ($scope, $state) {
 		$scope.refresh();
 	});
 }]);
-app.controller("statsCtrl", ["$scope", "$http", function ($scope, $http) {	
+app.controller("statsCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getUsers();
@@ -3111,6 +3571,7 @@ app.controller("statsCtrl", ["$scope", "$http", function ($scope, $http) {
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		}
 	}
 
@@ -3138,7 +3599,7 @@ app.controller("statsCtrl", ["$scope", "$http", function ($scope, $http) {
 		$scope.refresh();
 	});
 }]);
-app.controller("createUserCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createUserCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -3233,6 +3694,7 @@ app.controller("createUserCtrl", ["$scope", "$http", "Utils", function ($scope, 
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.user.name || !$scope.user.email || !$scope.user.address || !$scope.user.mobile || !$scope.user.institution || !$scope.user.password){
@@ -3261,11 +3723,12 @@ app.controller("createUserCtrl", ["$scope", "$http", "Utils", function ($scope, 
 		$scope.refresh();
 	});
 }]);
-app.controller("listUserCtrl", ["$scope", "$http", "$state", function ($scope, $http, $state) {
+app.controller("listUserCtrl", ["$scope", "$http", "$state", "$rootScope", function ($scope, $http, $state, $rootScope) {
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		Pleasure.init();
 		Layout.init();
+		$rootScope.$broadcast("loaded");
 
 		$scope.action.getUserList();
 	}
@@ -3296,7 +3759,7 @@ app.controller("listUserCtrl", ["$scope", "$http", "$state", function ($scope, $
 		$scope.refresh();
 	});
 }]);
-app.controller("userCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("userCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -3441,7 +3904,8 @@ app.controller("userCtrl", ["$scope", "$http", "$state", "Utils", function ($sco
 
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
-			FormsPickers.init();		
+			FormsPickers.init();	
+			$rootScope.$broadcast("loaded");	
 		},
 		validate : function(){
 			if(!$scope.user.name || !$scope.user.email || !$scope.user.address || !$scope.user.mobile || !$scope.user.institution){

@@ -112,8 +112,11 @@
 
 	<div class="content">
 
-		<div class="page-header full-content" ng-include="'partials/header.html'">
+		<div class="page-header full-content" ng-include="'partials/header.html'" style="margin-bottom:0px !important;">
 		</div><!--.page-header-->
+		<div style="margin-bottom:40px !important;" ng-controller="loadCtrl">
+			<div class="loading-bar indeterminate loading-red" ng-show="loaded"></div>
+		</div>
 		<div ui-view="main-content"></div>
 
 		<div class="footer-links margin-top-40">

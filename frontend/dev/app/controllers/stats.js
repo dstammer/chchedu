@@ -1,4 +1,4 @@
-app.controller("statsCtrl", ["$scope", "$http", function ($scope, $http) {	
+app.controller("statsCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getUsers();
@@ -404,6 +404,7 @@ app.controller("statsCtrl", ["$scope", "$http", function ($scope, $http) {
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		}
 	}
 

@@ -1,4 +1,4 @@
-app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getAmbassadorList();
@@ -101,6 +101,7 @@ app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", function
 
 			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.ambassador.photo);
 			$('#previewPhoto').css({'display':'block'});
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.ambassador.name || !$scope.ambassador.description || !$scope.ambassador.course || !$scope.ambassador.institution || !$scope.ambassador.video){

@@ -1,4 +1,4 @@
-app.controller("createBusinessCtrl", ["$scope", "$http", "Utils", function ($scope, $http, Utils) {	
+app.controller("createBusinessCtrl", ["$scope", "$http", "Utils", "$rootScope", function ($scope, $http, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -113,6 +113,7 @@ app.controller("createBusinessCtrl", ["$scope", "$http", "Utils", function ($sco
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			if(!$scope.business.name || !$scope.business.description || !$scope.business.phone || !$scope.business.address || !$scope.business.location.lng || !$scope.business.location.lat){

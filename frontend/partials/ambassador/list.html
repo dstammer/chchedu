@@ -2,7 +2,23 @@
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-heading">
-				<div class="panel-title"><h4>GUIDE LIST</h4></div>
+				<div class="panel-title">
+					<div class="col-md-3"><h4>AMBASSADOR LIST</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="ambassador_range" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
 				<ul class="list-material">
@@ -13,7 +29,8 @@
 							</div>
 							<div class="list-content" ui-sref="ambassador({ambassador_id:a._id})">
 								<span class="title">{{a.name}}</span>
-								<span class="caption">{{a.description}}</span>
+								<span class="caption">{{(a.description)?a.description:'No Description'}}</span>
+								<span>TOTAL VISITS:{{action.getAmbassadorStats(a);}}</span>
 							</div>
 						</a>
 					</li>

@@ -1,8 +1,9 @@
-app.controller("listUserCtrl", ["$scope", "$http", "$state", function ($scope, $http, $state) {
+app.controller("listUserCtrl", ["$scope", "$http", "$state", "$rootScope", function ($scope, $http, $state, $rootScope) {
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		Pleasure.init();
 		Layout.init();
+		$rootScope.$broadcast("loaded");
 
 		$scope.action.getUserList();
 	}

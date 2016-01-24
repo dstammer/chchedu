@@ -1,4 +1,4 @@
-app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.map.init();
@@ -156,6 +156,11 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 			$('#categorySelector').val($scope.event.category);
 			$('.nouislider-formatting').attr('start', $scope.event.price * 1000);
 
+			var splt = $scope.event.start_date.split(' ');
+
+			$('#start_date').val(splt[0]);
+			$('#start_time').val(splt[1] + splt[2]);
+
 			Pleasure.init();
 			Layout.init();
 
@@ -166,7 +171,9 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.event.photo);
 			$('#previewPhoto').css({'display':'block'});
 
-			$scope.map.initMap();		
+			$scope.map.initMap();	
+
+			$rootScope.$broadcast("loaded");	
 		},
 		validate : function(){
 			if(!$scope.event.name || !$scope.event.description || !$scope.event.address || !$scope.event.location.lng || !$scope.event.location.lat || !$scope.event.place){

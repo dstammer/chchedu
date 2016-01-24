@@ -2,7 +2,23 @@
 	<div class="col-md-12">
 		<div class="panel">
 			<div class="panel-heading">
-				<div class="panel-title"><h4>DEAL LIST(Active)</h4></div>
+				<div class="panel-title">
+					<div class="col-md-3"><h4>DEAL LIST(ACTIVE)</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="deal_range_1" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
 				<ul class="list-material">
@@ -14,6 +30,9 @@
 							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})" ng-show="!action.isExpired(d);">
 								<span class="title">{{d.name}} - {{d.business.name}}</span>
 								<span class="caption">{{d.description}}</span>
+								<span class="title">TOTAL VISITS: {{action.getDealStats(d, true);}}</span>
+								<span class="title">ADDED TO WISHLIST: {{action.getWishlist(d, true);}}</span>
+								<span class="title">REDEEMED: {{action.getRedeemed(d, true);}}</span>
 							</div>
 						</a>
 					</li>
@@ -24,7 +43,23 @@
 
 		<div class="panel">
 			<div class="panel-heading">
-				<div class="panel-title"><h4>DEAL LIST(Expired)</h4></div>
+				<div class="panel-title">
+					<div class="col-md-3"><h4>DEAL LIST(EXPIRED)</h4></div>
+					<div class="col-md-9">
+						<div class="control-group">
+							<div class="controls">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="ion-android-calendar"></i></span>
+									<div class="inputer">
+										<div class="input-wrapper">
+											<input type="text" id="deal_range_2" name="reservation" class="form-control bootstrap-daterangepicker-date-time" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
 				<ul class="list-material">
@@ -36,6 +71,9 @@
 							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})" ng-show="action.isExpired(d);">
 								<span class="title">{{d.name}} - {{d.business.name}}</span>
 								<span class="caption">{{d.description}}</span>
+								<span class="title">TOTAL VISITS: {{action.getDealStats(d, false);}}</span>
+								<span class="title">ADDED TO WISHLIST: {{action.getWishlist(d, false);}}</span>
+								<span class="title">REDEEMED: {{action.getRedeemed(d, false);}}</span>
 							</div>
 						</a>
 					</li>

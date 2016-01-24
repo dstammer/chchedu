@@ -1,4 +1,4 @@
-app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($scope, $http, $state, Utils) {	
+app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
 		$scope.action.getCategoryList();
@@ -125,6 +125,8 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", function ($sc
 
 			$('#inlineRadio1').prop('checked', $scope.guide.type == "NO");
 			$('#inlineRadio2').prop('checked', $scope.guide.type == "YES");
+
+			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
 			$scope.guide.text = $('.note-editable').html();
