@@ -107,7 +107,7 @@ module.exports = function (opts) {
 
 													var a = new alertModel();
 													a.user = users[i]._id;
-													a.alert = 'A new deal "' + name + '" that matches your preferred deal category has been added.;
+													a.alert = 'A new deal "' + name + '" that matches your preferred deal category has been added.';
 													a.time = new Date().getTime();
 													a.save();
 												}
