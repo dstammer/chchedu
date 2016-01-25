@@ -120,8 +120,12 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			FormsPickers.init();
 			FormsWysiwyg.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.guide.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.guide.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.guide.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 
 			$('#inlineRadio1').prop('checked', $scope.guide.type == "NO");
 			$('#inlineRadio2').prop('checked', $scope.guide.type == "YES");

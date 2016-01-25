@@ -543,8 +543,12 @@ app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", "$rootSc
 			FormsNoUISlider.init();
 			FormsPickers.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.ambassador.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.ambassador.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.ambassador.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){
@@ -945,8 +949,12 @@ app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", "$rootScop
 			FormsNoUISlider.init();
 			FormsPickers.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.business.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.business.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.business.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 
 			$scope.map.initMap();		
 
@@ -2305,8 +2313,12 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			FormsNoUISlider.init();
 			FormsPickers.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.event.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.event.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.event.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 
 			$scope.map.initMap();	
 
@@ -2785,8 +2797,12 @@ app.controller("guideCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			FormsPickers.init();
 			FormsWysiwyg.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.guide.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.guide.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.guide.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 
 			$('#inlineRadio1').prop('checked', $scope.guide.type == "NO");
 			$('#inlineRadio2').prop('checked', $scope.guide.type == "YES");
@@ -2893,7 +2909,7 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", "$rootScope", func
 					if($scope.list[i].type == "YES" && type == "true"){
 						skip = true;
 					}
-					if(!$scope.list[i].type == "NO" && type == "false"){
+					if($scope.list[i].type == "NO" && type == "false"){
 						skip = true;
 					}
 				}
@@ -5851,21 +5867,27 @@ app.factory('Utils', function(){
 
 		getBase64Image : function(img) {
 		    // Create an empty canvas element
-		    var canvas = document.createElement("canvas");
-		    canvas.width = img.width;
-		    canvas.height = img.height;
+			try{
+				var canvas = document.createElement("canvas");
+				canvas.width = img.width;
+				canvas.height = img.height;
 
-		    // Copy the image contents to the canvas
-		    var ctx = canvas.getContext("2d");
-		    ctx.drawImage(img, 0, 0);
+				// Copy the image contents to the canvas
+				var ctx = canvas.getContext("2d");
+			
+			    ctx.drawImage(img, 0, 0);
+				var dataURL = canvas.toDataURL("image/png");
+
+				return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+			} catch (e){
+				return "";
+			}
 
 		    // Get the data-URL formatted image
 		    // Firefox supports PNG and JPEG. You could check img.src to
 		    // guess the original format, but be aware the using "image/jpg"
 		    // will re-encode the image.
-		    var dataURL = canvas.toDataURL("image/png");
-
-		    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+		    
 		},
 		readURL : function(input, id) {
 		    if (input.files && input.files[0]) {

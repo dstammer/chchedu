@@ -1,36 +1,5 @@
 var FormsPickers = {
 
-	colorPicker: function () {
-		$('.bs-colorpicker').colorpicker();
-	},
-
-	colorPickerRgba: function () {
-		$('.bs-colorpicker-rgba').colorpicker({
-			format: 'rgba'
-		});
-	},
-
-	colorPickerWheel: function () {
-		$('.minicolors').each( function() {
-			$(this).minicolors({
-				control: $(this).attr('data-control') || 'hue',
-				defaultValue: $(this).attr('data-defaultValue') || '',
-				inline: $(this).attr('data-inline') === 'true',
-				letterCase: $(this).attr('data-letterCase') || 'lowercase',
-				opacity: $(this).attr('data-opacity'),
-				position: $(this).attr('data-position') || 'bottom left',
-				change: function(hex, opacity) {
-					if( !hex ) return;
-					if( opacity ) hex += ', ' + opacity;
-					try {
-						console.log(hex);
-					} catch(e) {}
-				},
-				theme: 'bootstrap'
-			});
-		});
-	},
-
 	dateRangePicker: function () {
 		$('.bootstrap-daterangepicker-basic').daterangepicker({
 			singleDatePicker: true,
@@ -110,10 +79,6 @@ var FormsPickers = {
 
 
 	init: function () {
-		this.colorPicker();
-		this.colorPickerRgba();
-		this.colorPickerWheel();
-
 		this.dateRangePicker();
 		this.dateRangePickerRange();
 		this.dateRangePickerTime();

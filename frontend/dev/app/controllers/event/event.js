@@ -168,8 +168,12 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			FormsNoUISlider.init();
 			FormsPickers.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.event.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.event.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.event.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 
 			$scope.map.initMap();	
 

@@ -10,21 +10,27 @@ app.factory('Utils', function(){
 
 		getBase64Image : function(img) {
 		    // Create an empty canvas element
-		    var canvas = document.createElement("canvas");
-		    canvas.width = img.width;
-		    canvas.height = img.height;
+			try{
+				var canvas = document.createElement("canvas");
+				canvas.width = img.width;
+				canvas.height = img.height;
 
-		    // Copy the image contents to the canvas
-		    var ctx = canvas.getContext("2d");
-		    ctx.drawImage(img, 0, 0);
+				// Copy the image contents to the canvas
+				var ctx = canvas.getContext("2d");
+			
+			    ctx.drawImage(img, 0, 0);
+				var dataURL = canvas.toDataURL("image/png");
+
+				return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+			} catch (e){
+				return "";
+			}
 
 		    // Get the data-URL formatted image
 		    // Firefox supports PNG and JPEG. You could check img.src to
 		    // guess the original format, but be aware the using "image/jpg"
 		    // will re-encode the image.
-		    var dataURL = canvas.toDataURL("image/png");
-
-		    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+		    
 		},
 		readURL : function(input, id) {
 		    if (input.files && input.files[0]) {

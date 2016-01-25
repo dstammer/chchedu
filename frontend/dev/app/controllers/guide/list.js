@@ -74,7 +74,7 @@ app.controller("listGuideCtrl", ["$scope", "$http", "$state", "$rootScope", func
 					if($scope.list[i].type == "YES" && type == "true"){
 						skip = true;
 					}
-					if(!$scope.list[i].type == "NO" && type == "false"){
+					if($scope.list[i].type == "NO" && type == "false"){
 						skip = true;
 					}
 				}

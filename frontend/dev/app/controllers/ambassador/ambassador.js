@@ -99,8 +99,12 @@ app.controller("ambassadorCtrl", ["$scope", "$http", "$state", "Utils", "$rootSc
 			FormsNoUISlider.init();
 			FormsPickers.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.ambassador.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.ambassador.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.ambassador.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 			$rootScope.$broadcast("loaded");
 		},
 		validate : function(){

@@ -209,8 +209,12 @@ app.controller("businessCtrl", ["$scope", "$http", "$state", "Utils", "$rootScop
 			FormsNoUISlider.init();
 			FormsPickers.init();
 
-			$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.business.photo);
-			$('#previewPhoto').css({'display':'block'});
+			if($scope.business.photo != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.business.photo);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
 
 			$scope.map.initMap();		
 
