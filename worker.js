@@ -135,7 +135,7 @@ function cron(){
 											var d1 = new Date( deals[j].expiry_date ),
 											d2 = new Date();
 
-//											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * 2 - 1000 * 60 * 10 && d1.getTime() - d2.getTime() < 1000 * 3600 * 24 * 2){
+											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * 2 - 1000 * 60 * 10 && d1.getTime() - d2.getTime() < 1000 * 3600 * 24 * 2){
 												if(u.settings.redeem == "YES"){
 													notification.sendDevNotification(u.device_token, 'You have not redeemed the deal "' + deals[j].name + '".' + " And it's 2 days to go.");
 													notification.sendProdNotification(u.device_token, 'You have not redeemed the deal "' + deals[j].name + '".' + " And it's 2 days to go.");
@@ -145,7 +145,7 @@ function cron(){
 													a.time = new Date().getTime();
 													a.save();
 												}
-//											}
+											}
 										}
 										
 										// After 2 days from redeemed
@@ -153,14 +153,14 @@ function cron(){
 											var t = redeemedTimestamp(u, deals[j]),
 											d2 = new Date();
 
-//											if(d2.getTime() - t >= 1000 * 3600 * 24 * 2 - 1000 * 60 * 10 && d2.getTime() - t < 1000 * 3600 * 24 * 2){
+											if(d2.getTime() - t >= 1000 * 3600 * 24 * 2 - 1000 * 60 * 10 && d2.getTime() - t < 1000 * 3600 * 24 * 2){
 												notification.sendDevNotification(u.device_token, 'How do you rate the offer "' + deals[j].name + '"?');
 												notification.sendProdNotification(u.device_token, 'How do you rate the offer "' + deals[j].name + '"?');
 												a.user = u._id;
 												a.alert ='How do you rate the offer "' + deals[j].name + '"?';
 												a.time = new Date().getTime();
 												a.save();
-//											}
+											}
 										}
 									}
 									
@@ -175,14 +175,14 @@ function cron(){
 											var d1 = new Date(Date.parse(events[j].start_date)),
 											d2 = new Date();
 
-//											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * date - 1000 * 60 * 10 && d1.getTime() - d2.getTime() < 1000 * 3600 * 24 * date){
+											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * date - 1000 * 60 * 10 && d1.getTime() - d2.getTime() < 1000 * 3600 * 24 * date){
 												notification.sendDevNotification(u.device_token, "It's " + date + ' days before the event "' + events[j].name + '"');
 												notification.sendProdNotification(u.device_token, "It's " + date + ' days before the event "' + events[j].name + '"');
 												a.user = u._id;
 												a.alert = "It's " + date + ' days before the event "' + events[j].name + '"';
 												a.time = new Date().getTime();
 												a.save();
-//											}
+											}
 										}
 									}
 								}
