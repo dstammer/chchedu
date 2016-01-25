@@ -188,19 +188,19 @@ module.exports = function (opts) {
 					var nodemailer = require('nodemailer');
 					var mailer = nodemailer.createTransport({service: 'Gmail',
 																auth: {
-																	user: "christchurcheducated1@gmail.com",
+																	user: "noreply.christchurcheducated@gmail.com",
 																	pass: "5012Wordsworth!"
 																}});
 					mailer.sendMail({
-						from: "christchurcheducated1@gmail.com", // sender address
+						from: "noreply.christchurcheducated@gmail.com", // sender address
 						to: req.body.email, // list of receivers
 						subject: "Password Recovery", // Subject line
 						text: "Dear " + user.name + ", \n\n" + 
 							  'Your Password: ' + user.password + '\n\n' +
-							  "Thank you\nChchedu Support",
+							  "Thank you\nChChEdu Support",
 						html: "Dear " + user.name + ", <br><br>" + 
 							  'Your Password: ' + user.password + '<br><br>' +
-							  "Thank you<br>Chchedu Support"
+							  "Thank you<br>ChChEdu Support"
 					}, function (err) {
 						console.log(err);
 						if(err){

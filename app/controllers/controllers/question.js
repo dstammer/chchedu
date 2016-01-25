@@ -57,33 +57,39 @@ module.exports = function (opts) {
             	return failure_callback(res, "Required Parameters are empty!");
             }
 
-			var nodemailer = require('nodemailer');
-			var mailer = nodemailer.createTransport({service: 'Gmail',
-														auth: {
-															user: "christchurcheducated1@gmail.com",
-															pass: "5012Wordsworth!"
-														}});
-			mailer.sendMail({
-				from: "christchurcheducated1@gmail.com", // sender address
-				to: "info.ceisa.chch@gmail.com", // list of receivers
-				subject: "Question to Ambassadors", // Subject line
-				text: "To: " + a.name + ", \n\n" + 
-					  "From: " + name + ", \n\n" + 
-					  "Email: " + email + ", \n\n" + 
-					  "Subject: " + subject + ", \n\n" + 
-					  'Message: ' + message + '\n\n',
-				html: "To: " + a.name + "<br><br>" + 
-					  "From: " + name + "<br><br>" + 
-					  "Email: " + email + "<br><br>" + 
-					  "Subject: " + subject + "<br><br>" + 
-					  "Message: " + message + "<br><br>"
-			}, function (err) {
-				console.log(err);
-				if(err){
-					return failure_callback(res, "Service temporarily unavailable.");
-				} else {
-					return res.json({ success : true });
+			ambassadorModel.find({_id : ambassador}).exec(function(err, a){
+				if(!a){
+					return failure_callback(res, "Ambassador Not Found!");
 				}
+
+				var nodemailer = require('nodemailer');
+				var mailer = nodemailer.createTransport({service: 'Gmail',
+															auth: {
+																user: "noreply.christchurcheducated@gmail.com",
+																pass: "5012Wordsworth!"
+															}});
+				mailer.sendMail({
+					from: "noreply.christchurcheducated@gmail.com", // sender address
+					to: "info.ceisa.chch@gmail.com", // list of receivers
+					subject: "Question to Ambassadors", // Subject line
+					text: "To: " + a.name + ", \n\n" + 
+						  "From: " + name + ", \n\n" + 
+						  "Email: " + email + ", \n\n" + 
+						  "Subject: " + subject + ", \n\n" + 
+						  'Message: ' + message + '\n\n',
+					html: "To: " + a.name + "<br><br>" + 
+						  "From: " + name + "<br><br>" + 
+						  "Email: " + email + "<br><br>" + 
+						  "Subject: " + subject + "<br><br>" + 
+						  "Message: " + message + "<br><br>"
+				}, function (err) {
+					console.log(err);
+					if(err){
+						return failure_callback(res, "Service temporarily unavailable.");
+					} else {
+						return res.json({ success : true });
+					}
+				});
 			});
 
             // Check If Question Already Exists
