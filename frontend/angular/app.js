@@ -2315,7 +2315,7 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			var splt = $scope.event.start_date.split(' ');
 
 			$('#start_date').val(splt[0]);
-			$('#start_time').val(splt[1] + splt[2]);
+			$('#start_time').val(splt[1]);
 
 			Pleasure.init();
 			Layout.init();
@@ -3196,6 +3196,8 @@ app.controller("menuCtrl", ["$scope", "$state", function ($scope, $state) {
 app.controller("statsCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
+		Pleasure.init();
+		Layout.init();
 		$scope.action.getUsers();
 	}
 
@@ -3594,8 +3596,6 @@ app.controller("statsCtrl", ["$scope", "$http", "$rootScope", function ($scope, 
 			return count;
 		},
 		initLayout : function(){
-			Pleasure.init();
-			Layout.init();
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();
