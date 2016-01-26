@@ -39,6 +39,16 @@ module.exports = function (opts) {
     return {
         "format_alert" : format_alert,
         "format_alertes" : format_alertes,
+		"post#alert/create" : function( req, res ) {
+			var id = req.body.id,
+				alert = req.body.alert;
+
+			a.user = id;
+			a.alert = alert;
+			a.time = new Date().getTime();
+
+			a.save();
+		},
 		"post#alert/get" : function( req, res ) {
 			var _id = req.body.id;
 			var query;

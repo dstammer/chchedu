@@ -1,6 +1,7 @@
 module.exports = function (opts) {
     var dealModel = opts.models.Deal,
-		alertModel = opts.models.Alert;
+		alertModel = opts.models.Alert,
+		businessModel = opts.models.Business;
     var failure_callback = require('./common.js')().failure_callback;
     var success_callback = require('./common.js')().success_callback;
 
@@ -85,36 +86,44 @@ module.exports = function (opts) {
 					if(cats){
 						userModel.find({}).exec(function(err, users){
 							if(users){
-								for(var i = 0; i < users.length; i++){
-									var settings = {};
-									try{
-										settings = JSON.parse(users[i].settings);
-									}
-									catch (e){
-										settings = {};
-									}
+								businessModel.find({_id:business}).exec(function(err, b){
+									if(b){
+										for(var i = 0; i < users.length; i++){
+											var settings = {};
+											try{
+												settings = JSON.parse(users[i].settings);
+											}
+											catch (e){
+												settings = {};
+											}
 
-									if(settings["preference"] && settings["preference"].constructor === Array && settings["new_deal"] == "YES"){
-										for(var j = 0; j < cats.length; j++){
-											for(var k = 0; k < settings["preference"].length; k++){
-												if(cats[j]._id.equals(category) && cats[j].name == settings["preference"][k]){
-													console.log(cats[j].name);
-													console.log(settings["preference"]);
-													console.log(users[i].device_token);
-													var notification = require('../../../notification.js');
-													notification.sendDevNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
-													notification.sendProdNotification(users[i].device_token, 'A new deal "' + name + '" that matches your preferred deal category has been added.');
+											if(settings["preference"] && settings["preference"].constructor === Array && settings["new_deal"] == "YES"){
+												for(var j = 0; j < cats.length; j++){
+													for(var k = 0; k < settings["preference"].length; k++){
+														if(cats[j]._id.equals(category) && cats[j].name == settings["preference"][k]){
+															console.log(cats[j].name);
+															console.log(settings["preference"]);
+															console.log(users[i].device_token);
+															var notification = require('../../../notification.js');
+															notification.sendDevNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + b.name + ' has been added that you might be interested in.');
+															notification.sendProdNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + b.name + ' has been added that you might be interested in.');
 
-													var a = new alertModel();
-													a.user = users[i]._id;
-													a.alert = 'A new deal "' + name + '" that matches your preferred deal category has been added.';
-													a.time = new Date().getTime();
-													a.save();
+															var a = new alertModel();
+															a.user = users[i]._id;
+															a.alert = 'A new deal called ' + name + ' for ' + b.name + ' has been added that you might be interested in.';
+															a.time = new Date().getTime();
+															a.save();
+														}
+													}
 												}
 											}
 										}
+									} else {
+										//return failure_callback(res, "Business Not Found.");
 									}
-								}
+								});
+							} else {
+										//return failure_callback(res, "Business Not Found.");
 							}
 						});
 					}
