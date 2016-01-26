@@ -16,7 +16,7 @@ module.exports = function (opts) {
             e.price           = event.price;
             e.address         = event.address;
             e.place           = event.place;
-            e.category        = eventcat.format_category(event.category);
+            e.category        = eventcat.format_categories(event.category);
 
             try{
                 e.location = JSON.parse(event.location);

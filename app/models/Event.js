@@ -26,10 +26,10 @@ module.exports = function (opts) {
 		location : {
             type: String
 		},
-		category : {
+		category : [{
 			type: mongoose.Schema.ObjectId,
             ref: "EventCat"
-		}
+		}]
     });
     
     return Schema;

@@ -107,7 +107,8 @@ app.controller("listEventCtrl", ["$scope", "$http", "$state", "$rootScope", func
 		},
 		isExpired : function(d){
 			var date = new Date(Date.parse(d.start_date));
-			if(date.getTime() > new Date().getTime()){
+			var time1 = date.getTime(), time2 = new Date().getTime();
+			if(time1 < time2){
 				return true;
 			}
 

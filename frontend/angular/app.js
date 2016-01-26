@@ -2281,13 +2281,24 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 
 					var html = '';
 					for(var i = 0; i < $scope.list.length; i++){
+						var selected = "";
 						if($scope.list[i] == $scope.event.category){
-							html = html + '"<option value="' + $scope.list[i]._id + '" selected>' + $scope.list[i].name + "</option>";
+							selected = "selected";
 						} else {
-							html = html + '"<option value="' + $scope.list[i]._id + '">' + $scope.list[i].name + "</option>";
+							if($scope.event.category && $scope.event.category.constructor == Array){
+								for(var j = 0; j < $scope.event.category.length; j++){
+									console.log($scope.event.category[j]._id + ' ' + $scope.list[i]._id);
+									if($scope.event.category[j]._id == $scope.list[i]._id){
+										selected = "selected";
+									}
+								}
+							}
 						}
+						html = html + "<option value='" + $scope.list[i]._id + "' selected>" + $scope.list[i].name + "</option>";
 					}
 					$('#categorySelector').html(html);
+
+					console.log(html);
 
 					$scope.action.initLayout();
 				} else {
@@ -2298,7 +2309,7 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			});
 		},
 		initLayout : function(){
-			$('#categorySelector').val($scope.event.category);
+			
 			$('.nouislider-formatting').attr('start', $scope.event.price * 1000);
 
 			var splt = $scope.event.start_date.split(' ');
@@ -2461,7 +2472,8 @@ app.controller("listEventCtrl", ["$scope", "$http", "$state", "$rootScope", func
 		},
 		isExpired : function(d){
 			var date = new Date(Date.parse(d.start_date));
-			if(date.getTime() > new Date().getTime()){
+			var time1 = date.getTime(), time2 = new Date().getTime();
+			if(time1 < time2){
 				return true;
 			}
 
