@@ -28,7 +28,6 @@
 								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
 							</div-->
 							<div class="list-content" ng-repeat="e in list" ui-sref="event({event_id:e._id})" ng-hide="action.isExpired(e)">
-							{{action.isExpired(e)}}
 								<span class="title">{{e.name}}</span>
 								<span class="caption">{{e.description}}</span>
 								<span>ADDED TO MY EVENT PAGE: {{action.getMyEvent(e);}}</span>
