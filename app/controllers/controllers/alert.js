@@ -43,6 +43,8 @@ module.exports = function (opts) {
 			var id = req.body.id,
 				alert = req.body.alert;
 
+			var a = new alertModel();
+
 			a.user = id;
 			a.alert = alert;
 			a.time = new Date().getTime();
