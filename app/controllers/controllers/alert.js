@@ -48,6 +48,7 @@ module.exports = function (opts) {
 			a.time = new Date().getTime();
 
 			a.save();
+			return res.json({success : true, messgae : ""});
 		},
 		"post#alert/get" : function( req, res ) {
 			var _id = req.body.id;
