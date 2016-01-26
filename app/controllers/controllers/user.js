@@ -195,12 +195,18 @@ module.exports = function (opts) {
 						from: "noreply.christchurcheducated@gmail.com", // sender address
 						to: req.body.email, // list of receivers
 						subject: "Password Recovery", // Subject line
-						text: "Dear " + user.name + ", \n\n" + 
+						text: "Hi " + user.name + ", \n\n" + 
+							"Thank you for using the Christchurch International Student Guide mobile App!" + "\n\n" + 
+							"We see you have requested some help to recover your password. No problem at all, your password is below." + "\n\n" + 
 							  'Your Password: ' + user.password + '\n\n' +
-							  "Thank you\nChChEdu Support",
-						html: "Dear " + user.name + ", <br><br>" + 
+							"Please try again and if you continue to have any login issues please contact us." + "\n\n" + 
+							  "Warmest Regards,\nChristchurch Educated\ninfo@christchurcheducated.co.nz",
+						html: "Hi " + user.name + ", <br><br>" + 
+							"Thank you for using the Christchurch International Student Guide mobile App!" + "<br><br>" + 
+							"We see you have requested some help to recover your password. No problem at all, your password is below." + "<br><br>" + 
 							  'Your Password: ' + user.password + '<br><br>' +
-							  "Thank you<br>ChChEdu Support"
+							"Please try again and if you continue to have any login issues please contact us." + "<br><br>" + 
+							  "Warmest Regards,<br>Christchurch Educated<br>info@christchurcheducated.co.nz"
 					}, function (err) {
 						console.log(err);
 						if(err){
