@@ -2294,7 +2294,7 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 								}
 							}
 						}
-						html = html + "<option value='" + $scope.list[i]._id + "' selected>" + $scope.list[i].name + "</option>";
+						html = html + "<option value='" + $scope.list[i]._id + "' " + selected + ">" + $scope.list[i].name + "</option>";
 					}
 					$('#categorySelector').html(html);
 
