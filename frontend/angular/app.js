@@ -3151,7 +3151,6 @@ app.controller("homeCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", 
 
 	$scope.action = {
 		doCreate : function(){
-			console.log($scope.home.image);
 			if(this.validate()){
 				$http({
 					method : "POST",
