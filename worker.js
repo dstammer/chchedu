@@ -246,9 +246,13 @@ function cron(){
 			}
 		});
 		var cronModel = models.Cron;
-		var ccc = new cronModel();
-		ccc.date = new Date();
-		ccc.save();
+		cronModel.findOne({}).exec(function(err, ccc){
+			if(!ccc){
+				var ccc = new cronModel();
+			}
+			ccc.date = new Date();
+			ccc.save();
+		});
 	});
 }
 
