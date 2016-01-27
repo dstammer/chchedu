@@ -56,6 +56,27 @@ app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", 
 
 			}
 		},
+		doCreateNew : function(){
+			if(this.validate()){
+				$http({
+					method : "POST",
+					url : Config.api.endPoint + Config.slug.createDeal,
+					data : $scope.deal
+				}).success(function(data) {
+					console.log(data);
+					// Store user information to local storage
+					if(data.success){
+						location.href = "/listDeal";
+					} else {
+						$('#err_btn').click();
+					}
+				}).error(function() {
+					$('#err_btn').click();
+				});
+			} else {
+
+			}
+		},
 		getCategoryList : function(){
 			$http({
 				method : "POST",

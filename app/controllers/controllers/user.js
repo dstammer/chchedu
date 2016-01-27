@@ -121,7 +121,7 @@ module.exports = function (opts) {
                 u.device_token	= (device_token)?device_token:"";
                 u.deals			= (deals)?JSON.stringify(deals):"{}";
                 u.events		= (events)?events:"{\"events\":[]}";
-                u.settings		= (settings)?JSON.stringify(settings):"{\"enter\":\"YES\",\"new_deal\":\"NO\",\"preference\":[],\"redeem\":\"YES\"}";
+                u.settings		= (settings)?JSON.stringify(settings):"{\"enter\":\"YES\",\"new_deal\":\"NO\",\"preference\":[\"All\"],\"redeem\":\"YES\"}";
                 u.auth_token    = "";
 				
 				u.save(function (err, new_user) {

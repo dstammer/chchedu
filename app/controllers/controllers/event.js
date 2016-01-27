@@ -19,6 +19,13 @@ module.exports = function (opts) {
             e.category        = eventcat.format_categories(event.category);
 
             try{
+                e.price = JSON.parse(event.price);
+            }
+            catch (e){
+                e.price = {};
+            }
+
+            try{
                 e.location = JSON.parse(event.location);
             }
             catch (e){
@@ -86,7 +93,7 @@ module.exports = function (opts) {
                 e.photo	        = (photo)?photo:"";
                 e.description   = (description)?description:"";
                 e.start_date 	= (start_date)?start_date:"";
-                e.price         = (price)?price:"";
+                e.price         = (price)?JSON.stringify(price):"{}";
                 e.place         = (place)?place:"";
                 e.address       = (address)?address:"";
                 e.category      = (category)?category:null;
@@ -199,7 +206,7 @@ module.exports = function (opts) {
                 e.photo         = (photo)?photo:e.photo;
                 e.description   = (description)?description:e.description;
                 e.start_date    = (start_date)?start_date:e.start_date;
-                e.price         = (price)?price:e.price;
+                e.price         = (price)?JSON.stringify(price):e.price;
                 e.place         = (place)?place:e.place;
                 e.address       = (address)?address:e.address;
                 e.category      = (category)?category:e.category;

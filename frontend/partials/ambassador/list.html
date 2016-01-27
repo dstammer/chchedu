@@ -25,7 +25,7 @@
 					<li class="has-action-left has-action-right" ng-repeat="a in list">
 						<a href="#" class="visible" >
 							<div class="list-action-left">
-								<img ng-src="'data:image/png;base64,' + a.photo" class="face-radius" alt="">
+								<img ng-src="data:image/png;base64,{{a.photo}}" class="face-radius" alt="">
 							</div>
 							<div class="list-content" ui-sref="ambassador({ambassador_id:a._id})">
 								<span class="title">{{a.name}}</span>

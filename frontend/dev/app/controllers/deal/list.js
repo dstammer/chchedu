@@ -176,6 +176,27 @@ app.controller("listDealCtrl", ["$scope", "$http", "$state", "$rootScope", funct
 
 			return count;
 		},
+		doClone : function(b){
+			var newB = b;
+			newB.name = b.name + " - Copy";
+			newB.category = (b.category._id)?b.category._id:"";
+			newB.business = (b.business._id)?b.business._id:"";
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.createDeal,
+				data : newB,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					location.href = location.href;
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
 		initLayout : function(){
 			Pleasure.init();
 			Layout.init();

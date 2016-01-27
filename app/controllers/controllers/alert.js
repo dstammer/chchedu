@@ -57,9 +57,9 @@ module.exports = function (opts) {
 			var query;
 
 			if(_id){
-				query = alertModel.findOne({_id : _id}).populate('category');
+				query = alertModel.findOne({_id : _id}).sort({time: -1}).populate('category');
 			} else {
-				query = alertModel.find({}).populate('category');
+				query = alertModel.find({}).sort({time: -1}).populate('category');
 			}
 
 			query.exec(function(err, alert){

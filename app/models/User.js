@@ -41,6 +41,15 @@ module.exports = function (opts) {
 		event_timestamp : {
 			type: String
 		},
+		alert_timestamp1 : {
+			type: String
+		},
+		alert_timestamp2 : {
+			type: String
+		},
+		alert_timestamp3 : {
+			type: String
+		},
 		settings : {
             type: String
 		}

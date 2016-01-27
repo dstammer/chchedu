@@ -149,11 +149,9 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 								}
 							}
 						}
-						html = html + "<option value='" + $scope.list[i]._id + "' selected>" + $scope.list[i].name + "</option>";
+						html = html + "<option value='" + $scope.list[i]._id + "' " + selected + ">" + $scope.list[i].name + "</option>";
 					}
 					$('#categorySelector').html(html);
-
-					console.log(html);
 
 					$scope.action.initLayout();
 				} else {
@@ -170,7 +168,10 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			var splt = $scope.event.start_date.split(' ');
 
 			$('#start_date').val(splt[0]);
-			$('#start_time').val(splt[1] + splt[2]);
+			$('#start_time').val(splt[1]);
+
+			$('#priceRange').attr('from', $scope.event.price.min);
+			$('#priceRange').attr('to', $scope.event.price.max);
 
 			Pleasure.init();
 			Layout.init();
@@ -196,11 +197,13 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 				return false;
 			}
 
-			var price = $("#price").html();
-			price = price.replace("($)", "");
+			var min = $('.irs-from').html(), max = $('.irs-to').html();
+			min = min.replace('$', '');
+			max = max.replace('$', '');
+
+			$scope.event.price = {"min" : min, "max" : max};
 
 			$scope.event.start_date = $("#start_date").val() + " " + $('#start_time').val();
-			$scope.event.price = price;
 			$scope.event.address = $('#addressAutoComplete').val();
 			$scope.event.category = $('#categorySelector').val();
 			$scope.event.photo = Utils.getBase64Image(document.getElementById('previewPhoto'));

@@ -117,7 +117,7 @@ function cron(){
 		var userModel = models.User,
 			dealModel = models.Deal,
 			eventModel = models.Event,
-			alertModel = models,Alert,
+			alertModel = models.Alert,
 			notification = require('./notification.js');
 
 		userModel.find({}).exec(function(err, users){
@@ -135,10 +135,25 @@ function cron(){
 											var d1 = new Date( deals[j].expiry_date ),
 											d2 = new Date();
 
-											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * 2 - 1000 * 60 * 10 && d1.getTime() - d2.getTime() < 1000 * 3600 * 24 * 2){
+											var alert_timestamp1 = {};
+											try{
+									            alert_timestamp1 = JSON.parse(users[i].alert_timestamp1);
+									        }
+									        catch (e){
+									        }
+									            
+
+											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * 2 && !alert_timestamp1[deals[j]._id]){
 												if(u.settings.redeem == "YES"){
-													notification.sendDevNotification(u.device_token, 'You hae a deal in your wishlist for ' + deals[j].business.name + " called " + deals[j].name + " that expires in 2 days. Don't miss out!");
-													notification.sendProdNotification(u.device_token, 'You hae a deal in your wishlist for ' + deals[j].business.name + " called " + deals[j].name + " that expires in 2 days. Don't miss out!");
+													if(u.device_token){
+														notification.sendDevNotification(u.device_token, 'You hae a deal in your wishlist for ' + deals[j].business.name + " called " + deals[j].name + " that expires in 2 days. Don't miss out! \n ChChEdu");
+														notification.sendProdNotification(u.device_token, 'You hae a deal in your wishlist for ' + deals[j].business.name + " called " + deals[j].name + " that expires in 2 days. Don't miss out!\n ChChEdu");
+													}
+
+													alert_timestamp1[deals[j]._id] = "YES";
+													users[i].alert_timestamp1 = JSON.stringify(alert_timestamp1);
+													users[i].save();
+
 													var a = new alertModel();
 													a.user = u._id;
 													a.alert = 'You hae a deal in your wishlist for ' + deals[j].business.name + " called " + deals[j].name + " that expires in 2 days. Don't miss out!";
@@ -150,12 +165,28 @@ function cron(){
 										
 										// After 2 days from redeemed
 										if(isInRedeemed(u, deals[j])){
-											var t = redeemedTimestamp(u, deals[j]),
+											var t = redeemedTimestamp(u, deals[j]._id),
 											d2 = new Date();
 
-											if(d2.getTime() - t >= 1000 * 3600 * 24 * 2 - 1000 * 60 * 10 && d2.getTime() - t < 1000 * 3600 * 24 * 2){
-												notification.sendDevNotification(u.device_token, 'You recently redeemed the deal ' + deals[j].name + ' at ' + deals[j].business.name + '. Help others by rating your experience. Go to the place in your App to leave a rating.');
-												notification.sendProdNotification(u.device_token, 'You recently redeemed the deal ' + deals[j].name + ' at ' + deals[j].business.name + '. Help others by rating your experience. Go to the place in your App to leave a rating.');
+											var alert_timestamp2 = {};
+											try{
+									            alert_timestamp2 = JSON.parse(users[i].alert_timestamp2);
+									        }
+									        catch (e){
+									            
+									        }
+
+											if(d2.getTime() - t >= 1000 * 3600 * 24 * 2 && !alert_timestamp2[deals[j]._id]){
+												if(u.device_token){
+													notification.sendDevNotification(u.device_token, 'You recently redeemed the deal ' + deals[j].name + ' at ' + deals[j].business.name + '. Help others by rating your experience. Go to the place in your App to leave a rating.\n ChChEdu');
+													notification.sendProdNotification(u.device_token, 'You recently redeemed the deal ' + deals[j].name + ' at ' + deals[j].business.name + '. Help others by rating your experience. Go to the place in your App to leave a rating.\n ChChEdu');
+												}
+
+												alert_timestamp2[deals[j]._id] = "YES";
+												users[i].alert_timestamp2 = JSON.stringify(alert_timestamp2);
+												users[i].save();
+
+												var a = new alertModel();
 												a.user = u._id;
 												a.alert = 'You recently redeemed the deal ' + deals[j].name + ' at ' + deals[j].business.name + '. Help others by rating your experience. Go to the place in your App to leave a rating.';
 												a.time = new Date().getTime();
@@ -172,12 +203,34 @@ function cron(){
 										// After 2 days from redeemed
 										if(reminder && reminder.set == "YES"){
 											var date = reminder.date;
-											var d1 = new Date(Date.parse(events[j].start_date)),
+											var d = events[j].start_date;
+											var d1 = new Date(Date.parse(d.substr(0, d.length - 2) + " " + d.substr(d.length - 2, 2))),
 											d2 = new Date();
 
-											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * date - 1000 * 60 * 10 && d1.getTime() - d2.getTime() < 1000 * 3600 * 24 * date){
-												notification.sendDevNotification(u.device_token, events[j].name + ' starts in ' + date + ' days.');
-												notification.sendProdNotification(u.device_token, events[j].name + ' starts in ' + date + ' days.');
+											var alert_timestamp3 = {};
+											try{
+									            alert_timestamp3 = JSON.parse(users[i].alert_timestamp3);
+									        }
+									        catch (e){
+									            
+									        }
+
+											console.log(d.substr(0, d.length - 2) + " " + d.substr(d.length - 2, 2));
+
+									        console.log(d1.getTime() - d2.getTime());
+
+											if(d1.getTime() - d2.getTime() >= 1000 * 3600 * 24 * date && !alert_timestamp3[events[j]._id]){
+												if(u.device_token){
+													notification.sendDevNotification(u.device_token, events[j].name + ' starts in ' + date + ' days.\n ChChEdu');
+													notification.sendProdNotification(u.device_token, events[j].name + ' starts in ' + date + ' days.\n ChChEdu');
+												}
+
+												alert_timestamp3[events[j]._id] = "YES";
+												users[i].alert_timestamp3 = JSON.stringify(alert_timestamp3);
+												users[i].save();
+
+
+												var a = new alertModel();
 												a.user = u._id;
 												a.alert = events[j].name + ' starts in ' + date + ' days.';
 												a.time = new Date().getTime();
@@ -192,6 +245,10 @@ function cron(){
 				});
 			}
 		});
+		var cronModel = models.Cron;
+		var ccc = new cronModel();
+		ccc.date = new Date();
+		ccc.save();
 	});
 }
 

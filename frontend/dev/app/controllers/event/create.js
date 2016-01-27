@@ -109,11 +109,13 @@ app.controller("createEventCtrl", ["$scope", "$http", "Utils", "$rootScope", fun
 				return false;
 			}
 
-			var price = $("#price").html();
-			price = price.replace("($)", "");
+			var min = $('.irs-from').html(), max = $('.irs-to').html();
+			min = min.replace('$', '');
+			max = max.replace('$', '');
+
+			$scope.event.price = {"min" : min, "max" : max};
 
 			$scope.event.start_date = $("#start_date").val() + " " + $('#start_time').val();
-			$scope.event.price = price;
 			$scope.event.address = $('#addressAutoComplete').val();
 			$scope.event.category = $('#categorySelector').val();
 			$scope.event.photo = Utils.getBase64Image(document.getElementById('previewPhoto'));

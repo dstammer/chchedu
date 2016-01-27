@@ -15,7 +15,7 @@ module.exports = function (opts) {
             type: String
 		},
 		price : {
-            type: Number
+            type: String
 		},
 		place : {
 			type: String

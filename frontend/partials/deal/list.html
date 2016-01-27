@@ -21,13 +21,11 @@
 				</div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
-				<ul class="list-material">
-					<li class="has-action-left has-action-right">
-						<a href="#" class="visible">
-							<!--div class="list-action-left">
-								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
-							</div-->
-							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})" ng-show="!action.isExpired(d);">
+				<ul class="list-material has-hidden">
+					<li class="has-action-left has-action-right" ng-repeat="d in list" ng-show="!action.isExpired(d);">
+						<a href="javascript:void(0);" ng-click="action.doClone(d);" class="hidden"><i class="ion-android-add" style="font-size:10px;">Duplicate</i></a>
+						<a href="javascript:void(0);"  ui-sref="deal({deal_id:d._id})"  class="visible">
+							<div class="list-content">
 								<span class="title">{{d.name}} - {{d.business.name}}</span>
 								<span class="caption">{{d.description}}</span>
 								<span class="title">TOTAL VISITS: {{action.getDealStats(d, true);}}</span>
@@ -62,18 +60,16 @@
 				</div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
-				<ul class="list-material">
-					<li class="has-action-left has-action-right">
-						<a href="#" class="visible">
-							<!--div class="list-action-left">
-								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
-							</div-->
-							<div class="list-content" ng-repeat="d in list" ui-sref="deal({deal_id:d._id})" ng-show="action.isExpired(d);">
+				<ul class="list-material has-hidden">
+					<li class="has-action-left has-action-right" ng-repeat="d in list" ng-show="action.isExpired(d);">
+						<a href="javascript:void(0);" ng-click="action.doClone(d);" class="hidden"><i class="ion-android-add" style="font-size:10px;">Duplicate</i></a>
+						<a href="javascript:void(0);"  ui-sref="deal({deal_id:d._id})"  class="visible">
+							<div class="list-content">
 								<span class="title">{{d.name}} - {{d.business.name}}</span>
 								<span class="caption">{{d.description}}</span>
-								<span class="title">TOTAL VISITS: {{action.getDealStats(d, false);}}</span>
-								<span class="title">ADDED TO WISHLIST: {{action.getWishlist(d, false);}}</span>
-								<span class="title">REDEEMED: {{action.getRedeemed(d, false);}}</span>
+								<span class="title">TOTAL VISITS: {{action.getDealStats(d, true);}}</span>
+								<span class="title">ADDED TO WISHLIST: {{action.getWishlist(d, true);}}</span>
+								<span class="title">REDEEMED: {{action.getRedeemed(d, true);}}</span>
 							</div>
 						</a>
 					</li>

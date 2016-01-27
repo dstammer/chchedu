@@ -208,6 +208,15 @@ app.config(["$urlRouterProvider", "$locationProvider", "$stateProvider", "$httpP
           }
        },
        requireLogin : true
+    }).state("home", {
+       url: "/mainPage",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/home.html",
+            controller: "homeCtrl"
+          }
+       },
+       requireLogin : true
     })
     
     $locationProvider.html5Mode(true);

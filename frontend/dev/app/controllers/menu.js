@@ -7,6 +7,9 @@ app.controller("menuCtrl", ["$scope", "$state", function ($scope, $state) {
     	index : function(){
     		location.href = "/";
     	},
+        home : function(){
+            location.href = "/mainPage";
+        },
     	categoryBusiness : function(){
     		location.href = "/categoryBusiness";
     	},

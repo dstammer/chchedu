@@ -1,6 +1,8 @@
 app.controller("statsCtrl", ["$scope", "$http", "$rootScope", function ($scope, $http, $rootScope) {	
 	/* Main Function of this Scope */
 	$scope.refresh = function () {
+		Pleasure.init();
+		Layout.init();
 		$scope.action.getUsers();
 	}
 
@@ -399,8 +401,6 @@ app.controller("statsCtrl", ["$scope", "$http", "$rootScope", function ($scope, 
 			return count;
 		},
 		initLayout : function(){
-			Pleasure.init();
-			Layout.init();
 			FormsIonRangeSlider.init();
 			FormsNoUISlider.init();
 			FormsPickers.init();

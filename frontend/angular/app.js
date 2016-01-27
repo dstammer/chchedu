@@ -208,6 +208,15 @@ app.config(["$urlRouterProvider", "$locationProvider", "$stateProvider", "$httpP
           }
        },
        requireLogin : true
+    }).state("home", {
+       url: "/mainPage",
+       views: {
+          "main-content" : { 
+            templateUrl: "partials/home.html",
+            controller: "homeCtrl"
+          }
+       },
+       requireLogin : true
     })
     
     $locationProvider.html5Mode(true);
@@ -282,6 +291,9 @@ var Config = {
 
 		getStats : "stats/get",
 		deleteUser : "user/delete",
+
+		getHome : "home/get",
+		createHome : "home/create",
 	}
 }
 
@@ -1324,6 +1336,26 @@ app.controller("listBusinessCtrl", ["$scope", "$http", "$state", "$rootScope", f
 		goToBusiness : function(business_id){
 			$state.go('business', {business_id : business_id});
 		},
+		doClone : function(b){
+			var newB = b;
+			newB.name = b.name + " - Copy";
+			newB.category = (b.category._id)?b.category._id:"";
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.createBusiness,
+				data : newB,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					location.href = location.href;
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
 		initLayout : function(){
 			Pleasure.init();
 			Layout.init();
@@ -1587,6 +1619,27 @@ app.controller("dealCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", 
 				$http({
 					method : "POST",
 					url : Config.api.endPoint + Config.slug.updateDeal,
+					data : $scope.deal
+				}).success(function(data) {
+					console.log(data);
+					// Store user information to local storage
+					if(data.success){
+						location.href = "/listDeal";
+					} else {
+						$('#err_btn').click();
+					}
+				}).error(function() {
+					$('#err_btn').click();
+				});
+			} else {
+
+			}
+		},
+		doCreateNew : function(){
+			if(this.validate()){
+				$http({
+					method : "POST",
+					url : Config.api.endPoint + Config.slug.createDeal,
 					data : $scope.deal
 				}).success(function(data) {
 					console.log(data);
@@ -1896,6 +1949,27 @@ app.controller("listDealCtrl", ["$scope", "$http", "$state", "$rootScope", funct
 
 			return count;
 		},
+		doClone : function(b){
+			var newB = b;
+			newB.name = b.name + " - Copy";
+			newB.category = (b.category._id)?b.category._id:"";
+			newB.business = (b.business._id)?b.business._id:"";
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.createDeal,
+				data : newB,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					location.href = location.href;
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
 		initLayout : function(){
 			Pleasure.init();
 			Layout.init();
@@ -2121,11 +2195,13 @@ app.controller("createEventCtrl", ["$scope", "$http", "Utils", "$rootScope", fun
 				return false;
 			}
 
-			var price = $("#price").html();
-			price = price.replace("($)", "");
+			var min = $('.irs-from').html(), max = $('.irs-to').html();
+			min = min.replace('$', '');
+			max = max.replace('$', '');
+
+			$scope.event.price = {"min" : min, "max" : max};
 
 			$scope.event.start_date = $("#start_date").val() + " " + $('#start_time').val();
-			$scope.event.price = price;
 			$scope.event.address = $('#addressAutoComplete').val();
 			$scope.event.category = $('#categorySelector').val();
 			$scope.event.photo = Utils.getBase64Image(document.getElementById('previewPhoto'));
@@ -2298,8 +2374,6 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 					}
 					$('#categorySelector').html(html);
 
-					console.log(html);
-
 					$scope.action.initLayout();
 				} else {
 					$('#err_btn').click();
@@ -2316,6 +2390,9 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 
 			$('#start_date').val(splt[0]);
 			$('#start_time').val(splt[1]);
+
+			$('#priceRange').attr('from', $scope.event.price.min);
+			$('#priceRange').attr('to', $scope.event.price.max);
 
 			Pleasure.init();
 			Layout.init();
@@ -2341,11 +2418,13 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 				return false;
 			}
 
-			var price = $("#price").html();
-			price = price.replace("($)", "");
+			var min = $('.irs-from').html(), max = $('.irs-to').html();
+			min = min.replace('$', '');
+			max = max.replace('$', '');
+
+			$scope.event.price = {"min" : min, "max" : max};
 
 			$scope.event.start_date = $("#start_date").val() + " " + $('#start_time').val();
-			$scope.event.price = price;
 			$scope.event.address = $('#addressAutoComplete').val();
 			$scope.event.category = $('#categorySelector').val();
 			$scope.event.photo = Utils.getBase64Image(document.getElementById('previewPhoto'));
@@ -2478,6 +2557,27 @@ app.controller("listEventCtrl", ["$scope", "$http", "$state", "$rootScope", func
 			}
 
 			return false;
+		},
+		doClone : function(b){
+			var newB = b;
+			newB.name = b.name + " - Copy";
+			newB.category = (b.category._id)?b.category._id:"";
+
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.createEvent,
+				data : newB,
+			}).success(function(data) {
+				console.log(data);
+				// Store user information to local storage
+				if(data.success){
+					location.href = location.href;
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
 		},
 		initLayout : function(){
 			Pleasure.init();
@@ -3025,12 +3125,101 @@ app.controller("headerCtrl", ["$scope", "$state", function ($scope, $state) {
 			$scope.page = {"title": "Dashboard", "subtitle":"Event Category"};
 		} else if($state.current.name == "event") {
 			$scope.page = {"title": "Dashboard", "subtitle":"Manage Event"};
+		} else if($state.current.name == "home") {
+			$scope.page = {"title": "Dashboard", "subtitle":"Edit Main Page"};
 		} else {
 			$scope.page = {"title": "Dashboard"};
 		}
 
 		console.log($state.current.name);
     }
+
+	$scope.$on('$stateChangeSuccess', function() {
+		$scope.refresh();
+	});
+}]);
+app.controller("homeCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", function ($scope, $http, $state, Utils, $rootScope) {	
+	/* Main Function of this Scope */
+	$scope.refresh = function () {
+		$scope.action.getHome();
+	}
+
+	$scope.home = {
+		caption : "",
+		image : ""
+	}
+
+	$scope.action = {
+		doCreate : function(){
+			console.log($scope.home.image);
+			if(this.validate()){
+				$http({
+					method : "POST",
+					url : Config.api.endPoint + Config.slug.createHome,
+					data : $scope.home
+				}).success(function(data) {
+					console.log(data);
+					// Store user information to local storage
+					if(data.success){
+						$('#success_btn').click();
+					} else {
+						$('#err_btn').click();
+					}
+				}).error(function() {
+					$('#err_btn').click();
+				});
+			} else {
+
+			}
+		},
+		getHome : function(){
+			$http({
+				method : "POST",
+				url : Config.api.endPoint + Config.slug.getHome,
+			}).success(function(data) {
+				// Store user information to local storage
+				if(data.success){
+					$scope.home = data.home;
+					$scope.action.initLayout();
+				} else {
+					$('#err_btn').click();
+				}
+			}).error(function() {
+				$('#err_btn').click();
+			});
+		},
+		initLayout : function(){
+			Pleasure.init();
+			Layout.init();
+
+			FormsIonRangeSlider.init();
+			FormsNoUISlider.init();
+			FormsPickers.init();
+
+			if($scope.home.image != ""){
+				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.home.image);
+				$('#previewPhoto').css({'display':'block'});
+			} else {
+				$('#previewPhoto').css({'display':'none'});
+			}
+			$rootScope.$broadcast("loaded");
+		},
+		validate : function(){
+			if(!$scope.home.caption){
+				$('#warning_btn').click();
+				return false;
+			}
+
+			$scope.home.image = Utils.getBase64Image(document.getElementById('previewPhoto'));
+
+			return true;
+		}
+	}
+
+	$("#photoFile").change(function(){
+		$scope.showPhoto = true;
+	    Utils.readURL(this, '#previewPhoto');
+	});
 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.refresh();
@@ -3134,6 +3323,9 @@ app.controller("menuCtrl", ["$scope", "$state", function ($scope, $state) {
     	index : function(){
     		location.href = "/";
     	},
+        home : function(){
+            location.href = "/mainPage";
+        },
     	categoryBusiness : function(){
     		location.href = "/categoryBusiness";
     	},

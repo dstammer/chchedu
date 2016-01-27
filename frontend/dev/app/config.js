@@ -57,6 +57,9 @@ var Config = {
 
 		getStats : "stats/get",
 		deleteUser : "user/delete",
+
+		getHome : "home/get",
+		createHome : "home/create",
 	}
 }
 

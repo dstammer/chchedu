@@ -21,9 +21,10 @@
 				</div>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
-				<ul class="list-material">
-					<li class="has-action-left has-action-right" ng-repeat="b in list" ui-sref="business({business_id:b._id})">
-						<a href="#" class="visible">
+				<ul class="list-material has-hidden">
+					<li class="has-action-left has-action-right" ng-repeat="b in list">
+						<a href="javascript:void(0);" ng-click="action.doClone(b);" class="hidden"><i class="ion-android-add" style="font-size:10px;">Duplicate</i></a>
+						<a href="javascript:void(0);"  ui-sref="business({business_id:b._id})" class="visible">
 							<div class="list-content">
 								<span class="title">{{b.name}}</span>
 								<span class="caption">{{b.description}}</span>

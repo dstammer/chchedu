@@ -86,8 +86,8 @@ module.exports = function (opts) {
 					if(cats){
 						userModel.find({}).exec(function(err, users){
 							if(users){
-								businessModel.find({_id:business}).exec(function(err, b){
-									if(b){
+								businessModel.findOne({_id:business}).exec(function(err, bbb){
+									if(bbb){
 										for(var i = 0; i < users.length; i++){
 											var settings = {};
 											try{
@@ -97,20 +97,23 @@ module.exports = function (opts) {
 												settings = {};
 											}
 
+                                            console.log(settings);
+
 											if(settings["preference"] && settings["preference"].constructor === Array && settings["new_deal"] == "YES"){
 												for(var j = 0; j < cats.length; j++){
 													for(var k = 0; k < settings["preference"].length; k++){
-														if(cats[j]._id.equals(category) && cats[j].name == settings["preference"][k]){
-															console.log(cats[j].name);
-															console.log(settings["preference"]);
-															console.log(users[i].device_token);
+                                                        console.log('---')
+                                                        console.log(settings["preference"][k] == "All");
+														if(cats[j]._id.equals(category) && (cats[j].name == settings["preference"][k] || settings["preference"][k] == "All") ){
 															var notification = require('../../../notification.js');
-															notification.sendDevNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + b.name + ' has been added that you might be interested in.');
-															notification.sendProdNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + b.name + ' has been added that you might be interested in.');
+                                                            if(users[i].device_token){
+														      	notification.sendDevNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + bbb.name + ' has been added that you might be interested in. \n ChChEdu');
+															    notification.sendProdNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + bbb.name + ' has been added that you might be interested in. \n ChChEdu');
+                                                            }
 
 															var a = new alertModel();
 															a.user = users[i]._id;
-															a.alert = 'A new deal called ' + name + ' for ' + b.name + ' has been added that you might be interested in.';
+															a.alert = 'A new deal called ' + name + ' for ' + bbb.name + ' has been added that you might be interested in.';
 															a.time = new Date().getTime();
 															a.save();
 														}

@@ -21,13 +21,11 @@
 				</div>>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
-				<ul class="list-material">
-					<li class="has-action-left has-action-right">
-						<a href="#" class="visible">
-							<!--div class="list-action-left">
-								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
-							</div-->
-							<div class="list-content" ng-repeat="e in list" ui-sref="event({event_id:e._id})" ng-hide="action.isExpired(e)">
+				<ul class="list-material has-hidden">
+					<li class="has-action-left has-action-right" ng-repeat="e in list" ng-hide="action.isExpired(e)">
+						<a href="javascript:void(0);" ng-click="action.doClone(e);" class="hidden"><i class="ion-android-add" style="font-size:10px;">Duplicate</i></a>
+						<a href="javascript:void(0);" ui-sref="event({event_id:e._id})" class="visible">
+							<div class="list-content">
 								<span class="title">{{e.name}}</span>
 								<span class="caption">{{e.description}}</span>
 								<span>ADDED TO MY EVENT PAGE: {{action.getMyEvent(e);}}</span>
@@ -59,13 +57,11 @@
 				</div>>
 			</div><!--.panel-heading-->
 			<div class="panel-body without-padding">
-				<ul class="list-material">
-					<li class="has-action-left has-action-right">
-						<a href="#" class="visible">
-							<!--div class="list-action-left">
-								<img src="../../assets/globals/img/faces/1.jpg" class="face-radius" alt="">
-							</div-->
-							<div class="list-content" ng-repeat="e in list" ui-sref="event({event_id:e._id})" ng-hide="!action.isExpired(e)">
+				<ul class="list-material has-hidden">
+					<li class="has-action-left has-action-right" ng-repeat="e in list" ng-hide="!action.isExpired(e)">
+						<a href="javascript:void(0);" ng-click="action.doClone(e);" class="hidden"><i class="ion-android-add" style="font-size:10px;">Duplicate</i></a>
+						<a href="javascript:void(0);" ui-sref="event({event_id:e._id})" class="visible">
+							<div class="list-content">
 								<span class="title">{{e.name}}</span>
 								<span class="caption">{{e.description}}</span>
 								<span>ADDED TO MY EVENT PAGE: {{action.getMyEvent(e);}}</span>

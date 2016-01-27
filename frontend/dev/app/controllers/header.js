@@ -26,6 +26,8 @@ app.controller("headerCtrl", ["$scope", "$state", function ($scope, $state) {
 			$scope.page = {"title": "Dashboard", "subtitle":"Event Category"};
 		} else if($state.current.name == "event") {
 			$scope.page = {"title": "Dashboard", "subtitle":"Manage Event"};
+		} else if($state.current.name == "home") {
+			$scope.page = {"title": "Dashboard", "subtitle":"Edit Main Page"};
 		} else {
 			$scope.page = {"title": "Dashboard"};
 		}
