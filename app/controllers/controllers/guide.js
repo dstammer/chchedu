@@ -91,15 +91,17 @@ module.exports = function (opts) {
                 page = req.body.page;
 			var query;
 
+            console.log('---' + page + '---');
+
 			if(_id){
                 if(page){
-                    query = guideModel.findOne({_id : _id}, {}, {skip : page * 10, limit : 10}).populate('category');
+                    query = guideModel.findOne({_id : _id}, {}, {skip : page * 5, limit : 5}).populate('category');
                 } else {
                     query = guideModel.findOne({_id : _id}).populate('category');
                 }
 			} else {
                 if(page){
-                    query = guideModel.find({}, {}, {skip : page * 10, limit : 10}).populate('category');
+                    query = guideModel.find({}, {}, {skip : page * 5, limit : 5}).populate('category');
                 } else {
                     query = guideModel.find({}).populate('category');
                 }
