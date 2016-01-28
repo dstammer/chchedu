@@ -87,13 +87,22 @@ module.exports = function (opts) {
         },
 
 		"post#guide/get" : function( req, res ) {
-			var _id = req.body.id;
+			var _id = req.body.id,
+                page = req.body.page;
 			var query;
 
 			if(_id){
-				query = guideModel.findOne({_id : _id}).populate('category');
+                if(page){
+                    query = guideModel.findOne({_id : _id}, {}, {skip : page * 10, limit : 10}).populate('category');
+                } else {
+                    query = guideModel.findOne({_id : _id}).populate('category');
+                }
 			} else {
-				query = guideModel.find({}).populate('category');
+                if(page){
+                    query = guideModel.find({}, {}, {skip : page * 10, limit : 10}).populate('category');
+                } else {
+                    query = guideModel.find({}).populate('category');
+                }
 			}
 
 			query.exec(function(err, guide){

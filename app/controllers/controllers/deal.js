@@ -107,8 +107,8 @@ module.exports = function (opts) {
 														if(cats[j]._id.equals(category) && (cats[j].name == settings["preference"][k] || settings["preference"][k] == "All") ){
 															var notification = require('../../../notification.js');
                                                             if(users[i].device_token){
-														      	notification.sendDevNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + bbb.name + ' has been added that you might be interested in. \n ChChEdu');
-															    notification.sendProdNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + bbb.name + ' has been added that you might be interested in. \n ChChEdu');
+														      	notification.sendDevNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + bbb.name + ' has been added that you might be interested in. \n Open the ChChEdu App and go to Deals.');
+															    notification.sendProdNotification(users[i].device_token, 'A new deal called ' + name + ' for ' + bbb.name + ' has been added that you might be interested in. \n Open the ChChEdu App and go to Deals..');
                                                             }
 
 															var a = new alertModel();
