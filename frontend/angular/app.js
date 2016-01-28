@@ -2389,7 +2389,11 @@ app.controller("eventCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope",
 			var splt = $scope.event.start_date.split(' ');
 
 			$('#start_date').val(splt[0]);
-			$('#start_time').val(splt[1]);
+			if(splt.length > 2){
+				$('#start_time').val(splt[1] + splt[2]);
+			} else {
+				$('#start_time').val(splt[1]);
+			}
 
 			$('#priceRange').attr('from', $scope.event.price.min);
 			$('#priceRange').attr('to', $scope.event.price.max);
