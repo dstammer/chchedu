@@ -11,7 +11,6 @@ app.controller("homeCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", 
 
 	$scope.action = {
 		doCreate : function(){
-			console.log($scope.home.image);
 			if(this.validate()){
 				$http({
 					method : "POST",
@@ -56,8 +55,8 @@ app.controller("homeCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", 
 			FormsNoUISlider.init();
 			FormsPickers.init();
 
-			if($scope.home.image != ""){
-				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.home.image);
+			if($scope.home && $scope.home.image != ""){
+				$('#previewPhoto').attr('src', $scope.home.image);
 				$('#previewPhoto').css({'display':'block'});
 			} else {
 				$('#previewPhoto').css({'display':'none'});

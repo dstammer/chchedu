@@ -3196,7 +3196,7 @@ app.controller("homeCtrl", ["$scope", "$http", "$state", "Utils", "$rootScope", 
 			FormsPickers.init();
 
 			if($scope.home && $scope.home.image != ""){
-				$('#previewPhoto').attr('src', 'data:image/png;base64,' + $scope.home.image);
+				$('#previewPhoto').attr('src', $scope.home.image);
 				$('#previewPhoto').css({'display':'block'});
 			} else {
 				$('#previewPhoto').css({'display':'none'});

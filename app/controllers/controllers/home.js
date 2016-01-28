@@ -39,6 +39,7 @@ module.exports = function (opts) {
         "format_homees" : format_homees,
         "post#home/create" : function (req, res) {
         	// Get Request Parameters
+			var cloudinary = require('cloudinary')
             var caption = req.body.caption,
                 image   = req.body.image;
 
@@ -60,17 +61,19 @@ module.exports = function (opts) {
                 	var a = new homeModel();
                 }
 
-                a.caption = (caption)?caption:"";
-                a.image   = (image)?image:"";
-				
-				a.save(function (err, new_home) {
-					if (err) {
-						console.log("-- Error : Saving Home --");
-                    	console.log(err);
-						return failure_callback(res);
-					} else {
-						return success_callback(res);
-					}
+				cloudinary.uploader.upload(image, function (r) {
+					a.caption = (caption)?caption:"";
+					a.image   = r.url;
+					
+					a.save(function (err, new_home) {
+						if (err) {
+							console.log("-- Error : Saving Home --");
+							console.log(err);
+							return failure_callback(res);
+						} else {
+							return success_callback(res);
+						}
+					});
 				});
             });
         },
