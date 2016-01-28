@@ -61,19 +61,17 @@ module.exports = function (opts) {
                 	var a = new homeModel();
                 }
 
-				cloudinary.uploader.upload(image, function (r) {
-					a.caption = (caption)?caption:"";
-					a.image   = r.url;
-					
-					a.save(function (err, new_home) {
-						if (err) {
-							console.log("-- Error : Saving Home --");
-							console.log(err);
-							return failure_callback(res);
-						} else {
-							return success_callback(res);
-						}
-					});
+				a.caption = (caption)?caption:"";
+				a.image   = (image)?image:"";
+				
+				a.save(function (err, new_home) {
+					if (err) {
+						console.log("-- Error : Saving Home --");
+						console.log(err);
+						return failure_callback(res);
+					} else {
+						return success_callback(res);
+					}
 				});
             });
         },
